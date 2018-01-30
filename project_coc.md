@@ -2,7 +2,7 @@
 In the interest of fostering an open and welcoming environment, [your project] pledges to be an inclusive and harassment-free experience for  all, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, educational background, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation. 
 
 ## General
-The General Code of Conduct applies to all [your project]-affiliated activity online and offline.
+The General Code of Conduct applies to all MCS-affiliated activity online and offline.
 
 ### Guidelines
 #### Be respectful and inclusive
@@ -39,7 +39,7 @@ This project is affiliated with [Rensselaer Center for Open Source](http://rcos.
 ### Project Maintainer Responsibilities
 Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct. In the case of contributors external to RPI and/or RCOS, temporary or permanent bans may occur. RPI-specific policies are outlined in the RCOS Community Code of Conduct, which can be found under "License and Attribution".
 
-## [Your Project]-Specific Guidelines 
+## MCS-Specific Guidelines 
 Add any additional ground rules you would like your project team to follow (if any) here.
 
 ## License and Attribution
