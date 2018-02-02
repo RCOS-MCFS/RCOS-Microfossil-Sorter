@@ -1,1 +1,5 @@
-# This is a test of Github Pages for this project.
+layout:post
+title: Test Post
+author: John Klingelhofer
+
+Lorem ipsum protom proctar et 
