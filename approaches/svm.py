@@ -2,11 +2,21 @@
 # Though it may later assume some more important function, currently this file is just a testing 
 # ground for different approaches to the mose base level of this project.
 
+from random import shuffle
+
 import copy
-import cv2 
+import cv2
+import math
 import numpy as np
-import os 
+import os
+import random
 import sys
+
+# Shorthand for displaying images in a common way.
+def show(img):
+    cv2.imshow('frame', img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 # Load the images into a list
 def load_images(path):
@@ -14,6 +24,7 @@ def load_images(path):
     images = []
     for filename in os.listdir(path):
         img = cv2.imread(os.path.join(path, filename))
+        img = cv2.resize(img, (16, 16))
         if img is not None:
             images.append(img)
     return images
@@ -40,19 +51,22 @@ def created_labeled_matrices():
     y, x, z = np.shape(images_rock[0])    
     contrast_img = copy.copy(images_rock[0])
     for i, image in enumerate(images_rock):
-        images_rock[i] = np.reshape(image, (y*x, 3))
-    
-    # Checks that despite transformations, the RGB content is unchanged
-    assert(list(contrast_img[0][0]) == list(images_rock[0][0]))
-    
-    rock_type = np.ndarray([1, 0, 0])
-    bone_type = np.ndarray([0, 1, 0])
-    for image in images_rock:
-        image = np.append(image, rock_type)
-    for image in images_bone:
-        image = np.append(image, bone_type)
+        images_rock[i] = np.reshape(image, (y*x*z))
+
+    y, x, z = np.shape(images_bone[0])
+    contrast_img = copy.copy(images_bone[0])
+    for i, image in enumerate(images_bone):
+        images_bone[i] = np.reshape(image, (y*x*z))
+
+    rock_type = np.array([1, 0, 0])
+    bone_type = np.array([0, 1, 0])
+    labels = [rock_type for image in images_rock] + [bone_type for image in images_bone]
 
     full_labeled_image_set = images_rock + images_bone
-    return full_labeled_image_set
+    full_labeled_image_set = np.array([np.array(x) for x in full_labeled_image_set])
+    return np.array(full_labeled_image_set), np.array(labels)
 
-images = created_labeled_matrices()
+x, y = created_labeled_matrices()
+
+
+
