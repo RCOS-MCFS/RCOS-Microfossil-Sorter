@@ -12,7 +12,7 @@ def show(img):
 
 def load_images(path):
     '''
-    Load the images contained within the folder path into a list of numpy matrices
+    Load the images contained within the folder path into a list of numpy matrices \
     representing these images.
     '''
     assert(os.path.isdir(path))
@@ -24,7 +24,7 @@ def load_images(path):
     return images
 
 
-def generate_images_from_multi(img, gaus=25, min_crop_size=7):
+def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
     '''
     Takes in an image containing multiple subjects and returns a list of each individual image.
     Gaus describes the intensity of the blur.
@@ -74,6 +74,11 @@ def generate_images_from_multi(img, gaus=25, min_crop_size=7):
         cropped_images += [y_cropped_images[k][:,x_1:x_2] for x_1, x_2 in x_coords]
     return cropped_images
 
+def average_color(image):
+    '''
+    Returns the average color for an image as a numpy array for each channel.
+    '''
+    return avg = [image[:, :, i].mean() for i in range(image.shape[-1])]
 
 def crop_image(image, gaus=25, min_crop_size=7):
     '''
