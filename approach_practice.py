@@ -3,8 +3,8 @@
 # ground for different approaches to the mose base level of this project.
 
 import copy
-import cv2 
 import numpy as np
+import cv2
 import os 
 import sys
 
