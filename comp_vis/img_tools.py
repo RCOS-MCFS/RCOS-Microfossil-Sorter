@@ -1,6 +1,6 @@
-
 import cv2
 import numpy as np
+import os
 
 # Shorthand for displaying images in a common way.
 def show(img):
@@ -79,4 +79,5 @@ def crop_image(image, gaus=25, min_crop_size=7):
     elif len(crops) > 1:
         print("ERROR: Too many images found in image. Try adjusting parameters.")
         return None
-    else return crops[0]
+    else:
+        return crops[0]
