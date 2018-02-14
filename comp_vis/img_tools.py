@@ -5,6 +5,8 @@ import os
 def show(img):
     '''
     Shorthand for displaying images in a common way.
+    :param img: Image to be displayed
+    :return: None
     '''
     cv2.imshow('frame', img)
     cv2.waitKey(0)
@@ -12,8 +14,9 @@ def show(img):
 
 def load_images(path):
     '''
-    Load the images contained within the folder path into a list of numpy matrices \
-    representing these images.
+    Load the images contained within the folder path into a list of numpy matrices representing these images.
+    :param path: Path to the folder containing images.
+    :return: A list containing the loaded images.
     '''
     assert(os.path.isdir(path))
     images = []
@@ -26,9 +29,10 @@ def load_images(path):
 
 def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
     '''
-    Takes in an image containing multiple subjects and returns a list of each individual image.
-    Gaus describes the intensity of the blur.
-    min_crop_size is the smallest image that could be cropped
+    :param img: Numpy matrix representing the image to be broken into cropped images.
+    :param gaus: The level of gaussian blur, used to reduce noise in edges.
+    :param min_crop_size: Smallest possible image size. Used to prevent edge noise form being cropped as its own image.
+    :return: A list containing the cropped images from the source image.
     '''
     # Apply gaussian blur to help later remove the background and keep
     # background noise from forming edges in the later edgemap.
@@ -76,9 +80,10 @@ def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
 
 def average_color(image):
     '''
-    Returns the average color for an image as a numpy array for each channel.
+    :param image: Image to be analyzed
+    :return: A list containing the averages for each color channel.
     '''
-    return avg = [image[:, :, i].mean() for i in range(image.shape[-1])]
+    return [image[:, :, i].mean() for i in range(image.shape[-1])]
 
 def crop_image(image, gaus=25, min_crop_size=7):
     '''
@@ -88,7 +93,7 @@ def crop_image(image, gaus=25, min_crop_size=7):
     If no images are detected, or too many are detected, returns type None, which 
     should be interpreted as an error by the receiving function.
     '''
-    crops = generate_images_from_multi(image, gaus, min_crop_size)
+    crops = generate_cropped_from_multi(image, gaus, min_crop_size)
     if len(crops) == 0:
         print("ERROR: No cropable area found in image. Try adjusting parameters.")
         return None
