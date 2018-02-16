@@ -12,60 +12,6 @@ import os
 import random
 import sys
 
-# Shorthand for displaying images in a common way.
-def show(img):
-    cv2.imshow('frame', img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
-# Load the images into a list
-def load_images(path):
-    assert(os.path.isdir(path))
-    images = []
-    for filename in os.listdir(path):
-        img = cv2.imread(os.path.join(path, filename))
-        img = cv2.resize(img, (24, 24))
-        if img is not None:
-            images.append(img)
-    return images
-
-# Translates images in the specified folders into matricies representing the RGB values of those images. The last value
-# in this each image's is the type label for the data in question, with (1, 0, 0) representing rock and (0, 1, 0) representing bone.
-def created_labeled_matrices():
-    # Checks that the correct arugments have been provided. 
-    if len(sys.argv) < 3:
-        print("ERROR: This program requires the following two folders as arguments:")
-        print("\tThe location of the images of rocks to be used in testing.")
-        print("\tThe location of the images of bone to be used in testing.")
-        exit()
-
-    images_rock = load_images(sys.argv[1])
-    images_bone = load_images(sys.argv[2])
-
-    # Checks that images dimensions are the same across both sets.
-    sizes = set([np.shape(image) for image in images_rock] + [np.shape(image) for image in images_bone])
-    assert(len(sizes) == 1)
-
-    # We translate these images into a 1-D array to make it slightly easier with numpy, and
-    # it allows us to add a column for labels.
-    y, x, z = np.shape(images_rock[0])    
-    contrast_img = copy.copy(images_rock[0])
-    for i, image in enumerate(images_rock):
-        images_rock[i] = np.reshape(image, (y*x*z))
-
-    y, x, z = np.shape(images_bone[0])
-    contrast_img = copy.copy(images_bone[0])
-    for i, image in enumerate(images_bone):
-        images_bone[i] = np.reshape(image, (y*x*z))
-
-    rock_type = np.array([1, 0, 0])
-    bone_type = np.array([0, 1, 0])
-    labels = [rock_type for image in images_rock] + [bone_type for image in images_bone]
-
-    full_labeled_image_set = images_rock + images_bone
-    full_labeled_image_set = np.array([np.array(x) for x in full_labeled_image_set])
-    return np.array(full_labeled_image_set), np.array(labels)
-
 def distance(x, y):
     assert (np.shape(x) == np.shape(y))
     diffVec = x - y
@@ -81,7 +27,7 @@ def sigmoid_logistic_function(net):
         return 0
     return val
 
-def neural_network(x, y, num_hidden, eta, epochs, activation_type):
+def neural_network(x, y, num_hidden, eta=0.05, epochs=100):
 
     n, d = np.shape(x)
     random_i_order = list(range(n))
@@ -166,9 +112,3 @@ def test_neural_network_accuracy(x, y, first_layer_weights, hidden_layer_weights
             accurate_count += 1
     print("The accuracy is:")
     print(str((accurate_count/len(y_vector))*100) + "%")
-
-x, y = created_labeled_matrices()
-first_layer_weights, hidden_layer_weights = neural_network(x, y, 10, .05, 100, 'sigmoid')
-test_neural_network_accuracy(x, y, first_layer_weights, hidden_layer_weights)
-
-
