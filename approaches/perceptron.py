@@ -5,7 +5,7 @@ import random
 
 def predict(weights, row, act_type):
     def linear(value):
-        return 1.00 if value > 0 else 0.00
+        return 1.00 if value > 0.00 else 0.00
 
     activation_val = sum([weights[i]*val for i, val in enumerate(row)]) + weights[-1]
     return linear(activation_val)
@@ -28,15 +28,14 @@ def create_perceptron(training_data, learning_rate=0.01, epochs=100, act_type='l
         for i, row in enumerate(training_data):
             prediction = predict(weights, row, act_type)
             error = classifications[i] - prediction
-            for i, val in enumerate(row):
-                weights[i] += learning_rate*error*val
+            for j, val in enumerate(row):
+                weights[j] += learning_rate*error*val
             weights[-1] += learning_rate*error
     return weights
 
 def test_accuracy(weights, test_data, act_type='linear'):
     classifications = test_data[:,-1]
     test_data = test_data[:,0:-1]
-
     accurate_count = sum([int(classifications[i] == predict(weights, test_data[i], act_type))
                           for i in range(len(test_data))])
     return accurate_count/len(test_data)

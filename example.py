@@ -1,6 +1,6 @@
 from approaches.perceptron import create_perceptron, test_accuracy
 import numpy as np
-import img_tools as it
+import comp_vis.img_tools as it
 import random
 import sys
 
@@ -31,7 +31,6 @@ def perceptron_example(training_percentage):
     # Combine these two sets of images into a matrix of their average color, with the last value representing
     # If it is a bone or a rock, 1 and 0 respectively.
     average_colors = []
-
     for image in images_bones:
         average_colors.append(it.average_color(image) + [1])
     for image in images_rocks:
@@ -52,7 +51,7 @@ def main():
     if len(sys.argv) < 3:
         print("ERROR: At command line arguments required.")
         print(
-            "\t(i.e. python3 example.py ../sample_images/multi_images/multi_bones ../sample_images/multi_images/multi_rocks)")
+            "\t(i.e. python3 example.py sample_images/multi_images/multi_bones sample_images/multi_images/multi_rocks)")
         exit()
     perceptron_example(.50)
 

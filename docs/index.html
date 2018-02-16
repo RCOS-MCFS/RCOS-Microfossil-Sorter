@@ -1,0 +1,74 @@
+<html>
+<head>
+    <title>RCOS Microfossil Sorter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link href="static/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div class="jumbotron">
+    <div class="backdrop">
+    </div>
+    <h1 class="display-3">Microfossil Concentrate Sorter</h1>
+    <p class="lead">Olivia Lundelius and John Klingelhofer - RCOS Spring 2018</p>
+    <a href="https://github.com/RCOS-MCFS/RCOS-Microfossil-Sorter" class="btn">View on GitHub</a>
+</div>
+
+<div class="stretch">
+    <div class="container">
+<div class="overview">
+    <h2>Overview</h2>
+    In paleontology, microfossil concentrate is a mixture of microfossils (typically from rodents and lizards) and gravel, with each particle being about 2 mm in size. Microfossils can potentially serve as a source of big data for paleontologists about the locations and environments from which they were collected. In order to study the microfossils, they must be sorted out from the gravel, which is a very time consuming process. This project aims to build a machine that automatically sorts microfossils from concentrate, and for that machine's assembly and software to be made open source and accessible by paleontology laboratories.
+</div>
+    </div>
+</div>
+<div class="container">
+    <div class="blog-entry">
+        <h2 class="blog-title"> Week 3 </h2>
+        <h4 class="blog-date">February 15, 2018</h4>
+        <p class="blog-body">
+            This week's is among the final weeks for the classifier, unless later in the semester we move beyond binary
+            classification. There's now a function in place which can take an image containing multiple bones/rocks
+            or a single bone/rock and crop an image containing just that image, provided that the image is taken on a
+            clear enough background such that edge detection can form a general outline of the rock/stone in question.
+        </p><p>
+            This cropping may possibly prove useful as an additional metric in classification, as the rocks tend to have
+            a much more uniform aspect ratio (often about 1:1) when compared to the bones. In addition, this automatic
+            cropping makes obtaining measurements for the samples easy, which itself could prove an interesting
+            additional metric. Though the clear difference in color between the rocks and bones under UV light may
+            make these metrics superfluous, they may still have some purpose or have a role in broader analysis of
+            collected samples.
+        </p><p>
+            This week also saw more work on different classifiers. Since differences in average color should be enough
+            to segment the data, we developed a simple perceptron, and began work on a SVM. We also changed the structure
+            of functions within files, with all of the image manipulations being moved into the "img_tools.py" file which
+            can be imported into any function, rather than each classifier having its own subset of a broader collection
+            of functions.
+        </p>
+    </div>
+    <hr />
+    <div class="blog-entry">
+        <h2 class="blog-title"> Week 2 </h2>
+        <h4 class="blog-date">February 8, 2018</h4>
+        <p class="blog-body">
+            This week's work has largely been focused on the Computer Vision aspect of this project. Of course an important part of this process was the creation of new training data under more controlled conditions, as well as examining the various modes available for the classification of this data.
+        </p><p>
+            Increasing the expected ease of this process, one of the major delimitating factors between bones and stone is the average color. Provided that this classiciation difference holds true for all of our upcoming samples, aside from those which we have currently, each image can be reduced to a simple vector containing the average R, G, and B values. With the normalcy of this data (not the case were we interpreting the images directly), we can apply standard data mining techniques to this data such as SVMs, Linear Regression, etc. Our old training data could be inearly separated based on these RGB values, and we expect this to hold true for the upcoming data.
+        </p><p>
+            This upcoming week will include nailing down our classification strategy for future weeks, as well as starting to make some headway and decisions for the hardware aspect of this project.
+        </p>
+    </div>
+    <hr />
+    <div class="blog-entry">
+        <h2 class="blog-title"> Week 1 </h2>
+        <h4 class="blog-date">February 1, 2018</h4>
+        <p class="blog-body">
+            This first week was largely focused on laying the foundation for this project, as a strong early foundation means time saved later on. This foundation week included the setup of our GitHub and this website, installing all of the packages to be used in this assignment on the comptuers of both team members (including the often persnickity OpenCV) and discussing some of the broader goals for the project.
+        </p>
+    </div>
+</div>
+</body>
+</html>
