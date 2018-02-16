@@ -40,31 +40,64 @@ def load_images(filename):
 
 print(sys.argv[1] + "\n")
 load_images(sys.argv[1])
+print(rawdata)
 print("Finished 1\n")
 
+new_data = []
+for x in rawdata:
+    if x:
+        new_data.append(x)
+rawdata = new_data
 
-# Split into training and testing data, 20:80 ratio
-datasize = len(rawdata);
-trainarray = random.sample(range(0, datasize), datasize/5)
+print("Finished 1.5\n")
+
+# Split into training and testing data, 50:50 ratio
+datasize = len(rawdata)
+trainarray = random.sample(range(0, datasize), int(datasize/2))
 for i in trainarray:
-    traindata.append(rawdata[i][0, 2])
+    traindata.append(rawdata[i][0:3])
     trainvalues.append(rawdata[i][3])
 
 for i in range(0, datasize):
     if i not in trainarray:
-        testdata.append(rawdata[i][0, 2])
+        testdata.append(rawdata[i][0:3])
         testvalues.append(rawdata[i][3])
 
+print(traindata)
+print(trainvalues)
 print("Finished 2\n")
 
 # train svm
 
 clf = SVC()
 clf.fit(traindata, trainvalues)
+
+
 SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
-     decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+     decision_function_shape='ovr', gamma='auto', kernel='poly',
      max_iter=-1, probability=False, random_state=None, shrinking=True,
      tol=0.001, verbose=False)
 
-print(clf.predict(testdata))
+print("Finished 3\n")
 
+result = clf.predict(testdata)
+print("RESULT:\n")
+print(len(result))
+print("\n")
+print(result)
+print("RESULT:\n")
+print(testvalues)
+print("\n")
+print(len(testvalues))
+print("\n")
+
+print("Finished 4\n")
+
+correct = 0
+for a in range(0, len(testvalues)):
+    if testvalues[a] == result[a]:
+        correct += 1
+
+
+print("PERCENT:\n")
+print(correct / len(testvalues))
