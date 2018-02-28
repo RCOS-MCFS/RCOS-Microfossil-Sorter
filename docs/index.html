@@ -28,6 +28,30 @@
 <div class="container">
     <div class="blog-entry">
         <h2 class="blog-title"> Week 4 </h2>
+        <h4 class="blog-date">February 27, 2018</h4>
+        <p class="blog-body">
+            Went to RPI Forge, which was extremely helpful.  Forge is mostly for 3D printing, the Embedded Hardware Club would 
+            likely be more helpful for what we're doing, but someone at Forge helped me.  Apparently an Arduino isn't actually all
+            that necessary, and the same things can be controlled by various modules that can connect to a Raspberry Pi directly rather
+            than having the extra complication of going through an Arduino and trying to sync up a camera module through R-Pi and motor
+            modules through Arduino.
+        </p><p>
+            It was suggested that we 3D print a hopper through Forge, I've been offered help with that by an individual named Misha.
+            We should probably have two kinds of servos, a continuous one for the central rotating mechanism, and a positional rotation servo
+            for a chute to deposit samples into one bin or another.
+        </p><p>
+            So far as getting everything to be used directly through the R-Pi, there's a small hardware piece that can be used directly
+            through the R-Pi rather than be forced to use the Arduino interface.  There's a Python package (something like python-smbus)
+            that works for this servo HAT after enabling I^2C on the R-Pi.  Not sure how to do any of that yet, will be working this week
+            to get that working, and also to get two servos and the servo HAT.  It was suggested that we laser-cut the device out of
+            polystyrene, but that's something further off into the future.  It was also suggested that we get a small spectrometer module,
+            which, according to Misha, works very well.  Should try using that either instead of or in addition to the camera module.
+        </p>
+    </div>
+    <hr />
+<div class="container">
+    <div class="blog-entry">
+        <h2 class="blog-title"> Week 4 </h2>
         <h4 class="blog-date">February 26, 2018</h4>
         <p class="blog-body">
             SVM classifier was fixed, now looking further into gathering hardware components. Ordered an Elegoo board on Amazon,
