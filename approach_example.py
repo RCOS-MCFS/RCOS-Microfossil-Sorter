@@ -36,9 +36,9 @@ def generate_avg_color_data():
     # If it is a bone or a rock, 1 and 0 respectively.
     average_colors = []
     for image in images_bones:
-        average_colors.append(it.average_color(image) + [1])
+        average_colors.append(it.average_color(image) + [max(list(np.shape(image)))] + [min(list(np.shape(image)))] + [1])
     for image in images_rocks:
-        average_colors.append(it.average_color(image) + [0])
+        average_colors.append(it.average_color(image) + [max(list(np.shape(image)))] + [min(list(np.shape(image)))] + [0])
 
     # Select training set from this matix.
     training_set_size = int(np.shape(average_colors)[0] * training_percentage)
@@ -56,9 +56,9 @@ def main():
     perceptron.train(training_data)
     print(perceptron.assess_accuracy(testing_data))
 
-    multiclass = Approach(Multiclass_Logistic_Regression)
-    multiclass.train(training_data)
-    print(multiclass.assess_accuracy(testing_data))
+    #multiclass = Approach(Multiclass_Logistic_Regression)
+    #multiclass.train(training_data)
+    #print(multiclass.assess_accuracy(testing_data))
 
 if __name__ == "__main__":
     main()

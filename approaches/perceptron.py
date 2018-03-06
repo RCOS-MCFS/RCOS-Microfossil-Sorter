@@ -13,7 +13,7 @@ class Perceptron():
         activation_val = sum([weights[i]*val for i, val in enumerate(row)])
         return linear(activation_val)
 
-    def train(self, training_data, learning_rate=0.01, epochs=100, act_type='linear'):
+    def train(self, training_data, learning_rate=0.005, epochs=1000, act_type='linear'):
         '''
         :param training_images: A numpy matrix of the average colors for images in the training set, with the final column
         representing their type, 1 being bone and 0 being rock.
@@ -25,15 +25,17 @@ class Perceptron():
 
         # Establish original weights.
         n, d = np.shape(training_data)
-        weights = [0.00 for i in range(d+1)] # +1 for the bias
+        weights = [0.001 for i in range(d+1)] # +1 for the bias
 
 
         # Initialize our progress bar.
         progressbar.streams.wrap_stderr()
         logging.basicConfig()
         bar = progressbar.ProgressBar()
-
         for epoch in bar(range(epochs)):
+            learning_rate *= .995
+            if epoch%30 == 0:
+                print(learning_rate)
             for i, row in enumerate(training_data):
                 prediction = self.classify(weights, row, act_type)
                 error = classifications[i] - prediction
