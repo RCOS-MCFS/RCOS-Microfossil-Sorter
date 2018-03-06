@@ -3,13 +3,13 @@ import numpy as np
 import os
 import random
 
-def show(img):
+def show(img, title='frame'):
     '''
     Shorthand for displaying images in a common way.
     :param img: Image to be displayed
     :return: None
     '''
-    cv2.imshow('frame', img)
+    cv2.imshow(title, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
