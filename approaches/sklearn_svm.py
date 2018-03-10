@@ -1,13 +1,14 @@
 # SVM using the built in functions in Skikit
+from approaches.approach import Approach
 
 from sklearn import svm
 import csv
 import sys
 import random
 
-class Sklearn_SVM():
+class Sklearn_SVM(Approach):
 
-    def classify(self, clf, row):
+    def classify_datum(self, clf, row):
         return clf.predict(row)[0]
 
     def train(self, training_data):
@@ -21,4 +22,6 @@ class Sklearn_SVM():
 
         clf.fit(train_data, train_values)
 
-        return clf
+        # I realize that weights may not be the most appropriate terms for this model, but it was the best
+        # one for the superclass which would then cover all of the lower cases.
+        self.weights = clf

@@ -3,30 +3,31 @@ import numpy as np
 import os
 import random
 
-def show(img, title='frame'):
-    '''
-    Shorthand for displaying images in a common way.
-    :param img: Image to be displayed
-    :return: None
-    '''
-    cv2.imshow(title, img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
-def load_images(path):
+def average_color(image):
     '''
-    Load the images contained within the folder path into a list of numpy matrices representing these images.
-    :param path: Path to the folder containing images.
-    :return: A list containing the loaded images.
+    :param image: Image to be analyzed
+    :return: A list containing the averages for each color channel.
     '''
-    assert(os.path.isdir(path))
-    images = []
-    for filename in os.listdir(path):
-        img = cv2.imread(os.path.join(path, filename))
-        if img is not None:
-            images.append(img)
-    return images
+    return [image[:, :, i].mean() for i in range(image.shape[-1])]
 
+def crop_image(image, gaus=25, min_crop_size=7):
+    '''
+    The above function is meant for the cropping of multiple objects from a single photo
+    This is for refining a single image.
+
+    If no images are detected, or too many are detected, returns type None, which
+    should be interpreted as an error by the receiving function.
+    '''
+    crops = generate_cropped_from_multi(image, gaus, min_crop_size)
+    if len(crops) == 0:
+        print("ERROR: No cropable area found in image. Try adjusting parameters.")
+        return None
+    elif len(crops) > 1:
+        print("ERROR: Too many images found in image. Try adjusting parameters.")
+        return None
+    else:
+        return crops[0]
 
 def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
     '''
@@ -79,27 +80,37 @@ def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
         cropped_images += [y_cropped_images[k][:,x_1:x_2] for x_1, x_2 in x_coords]
     return cropped_images
 
-def average_color(image):
+def normalize_image_sizes(images):
     '''
-    :param image: Image to be analyzed
-    :return: A list containing the averages for each color channel.
+    Normalizes the size of images, potentially useful for certain machine learning functions which mandate the
+    same size for all input vectors.
+    :param images: A vector containing multiple images
+    :return: A vector of the same images, but with the all the same size with black bars being added to the smaller
+            images evenly on both sides in order to bring them up to the desired size.
     '''
-    return [image[:, :, i].mean() for i in range(image.shape[-1])]
+    new_size = max(np.shape(image) for image in images)
+    print(new_size)
 
-def crop_image(image, gaus=25, min_crop_size=7):
+def load_images(path):
     '''
-    The above function is meant for the cropping of multiple objects from a single photo
-    This is for refining a single image.
-    
-    If no images are detected, or too many are detected, returns type None, which 
-    should be interpreted as an error by the receiving function.
+    Load the images contained within the folder path into a list of numpy matrices representing these images.
+    :param path: Path to the folder containing images.
+    :return: A list containing the loaded images.
     '''
-    crops = generate_cropped_from_multi(image, gaus, min_crop_size)
-    if len(crops) == 0:
-        print("ERROR: No cropable area found in image. Try adjusting parameters.")
-        return None
-    elif len(crops) > 1:
-        print("ERROR: Too many images found in image. Try adjusting parameters.")
-        return None
-    else:
-        return crops[0]
+    assert(os.path.isdir(path))
+    images = []
+    for filename in os.listdir(path):
+        img = cv2.imread(os.path.join(path, filename))
+        if img is not None:
+            images.append(img)
+    return images
+
+def show(img, title='frame'):
+    '''
+    Shorthand for displaying images in a common way.
+    :param img: Image to be displayed
+    :return: None
+    '''
+    cv2.imshow(title, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
