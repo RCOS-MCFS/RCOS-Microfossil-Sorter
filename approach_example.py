@@ -52,7 +52,7 @@ def generate_avg_color_data():
 def main():
     training_data, testing_data = generate_avg_color_data()
 
-    perceptron = Approach(Perceptron)
+    perceptron = Perceptron()
     perceptron.train(training_data)
     print(perceptron.assess_accuracy(testing_data))
 

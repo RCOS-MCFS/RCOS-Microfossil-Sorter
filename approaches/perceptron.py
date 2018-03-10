@@ -1,12 +1,14 @@
 # RCOS - MCFS
 # For color-based discrimination, a perceptron may be more than enough.
+from approaches.approach import Approach
+
 import logging
 import numpy as np
 import progressbar
 
-class Perceptron():
+class Perceptron(Approach):
 
-    def classify(self, weights, row, act_type='linear'):
+    def classify_datum(self, weights, row, act_type='linear'):
         def linear(value):
             return 1.00 if value > 0.00 else 0.00
         # A row by any other name ...
@@ -37,9 +39,9 @@ class Perceptron():
             if epoch%30 == 0:
                 print(learning_rate)
             for i, row in enumerate(training_data):
-                prediction = self.classify(weights, row, act_type)
+                prediction = self.classify_datum(weights, row, act_type)
                 error = classifications[i] - prediction
                 for j, val in enumerate(row):
                     weights[j] += learning_rate*error*val
                 weights[-1] += learning_rate*error
-        return weights
+        self.weights = weights

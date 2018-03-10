@@ -1,7 +1,6 @@
 class Approach():
-    def __init__(self, appr):
-        self.appr = appr()
-        self.weights = []
+    def __init__(self):
+        self.weights = None
 
     def assess_accuracy(self, test_data):
         labels = test_data[:,-1]
@@ -12,9 +11,9 @@ class Approach():
 
     def classify(self, data):
         if len(data) == 1:
-            return self.appr.classify(self.weights, data)
+            return self.classify_datum(self.weights, data)
         if len(data) > 1:
-            return [self.appr.classify(self.weights, d) for d in data]
+            return [self.classify_datum(self.weights, d) for d in data]
         else:
             raise ValueError("No data passed.")
 
@@ -23,6 +22,3 @@ class Approach():
             return self.weights
         else:
             raise NameError("Weights have not yet been trained.")
-
-    def train(self, training_data):
-        self.weights = self.appr.train(training_data)
