@@ -3,7 +3,6 @@ import numpy as np
 import os
 import random
 
-
 def average_color(image):
     '''
     :param image: Image to be analyzed
@@ -29,6 +28,20 @@ def crop_image(image, gaus=25, min_crop_size=7):
     else:
         return crops[0]
 
+def load_images(path):
+    '''
+    Load the images contained within the folder path into a list of numpy matrices representing these images.
+    :param path: Path to the folder containing images.
+    :return: A list containing the loaded images.
+    '''
+    assert (os.path.isdir(path))
+    images = []
+    for filename in os.listdir(path):
+        img = cv2.imread(os.path.join(path, filename))
+        if img is not None:
+            images.append(img)
+    return images
+
 def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
     '''
     :param img: Numpy matrix representing the image to be broken into cropped images.
@@ -38,17 +51,17 @@ def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
     '''
     # Apply gaussian blur to help later remove the background and keep
     # background noise from forming edges in the later edgemap.
-    blur = cv2.GaussianBlur(img,(gaus,gaus),0)
+    blur = cv2.GaussianBlur(img, (gaus, gaus), 0)
     edges = cv2.Canny(blur, 50, 50)
     # Break the edgemap into columns. Save the y coordinates which delinate these rows.
     y, x = np.shape(edges)
     blank_xs = []
     for pos_x in range(x):
-        if sum(edges[:,pos_x]) == 0: blank_xs.append(pos_x)
+        if sum(edges[:, pos_x]) == 0: blank_xs.append(pos_x)
     x_coords = []
     for i in range(1, len(blank_xs)):
-        if blank_xs[i]-blank_xs[i-1] > min_crop_size:
-            x_coords.append((blank_xs[i-1], blank_xs[i]+1))
+        if blank_xs[i] - blank_xs[i - 1] > min_crop_size:
+            x_coords.append((blank_xs[i - 1], blank_xs[i] + 1))
     x_column_images_edges = [edges[:, x_1:x_2] for x_1, x_2 in x_coords]
     x_column_images = [img[:, x_1:x_2] for x_1, x_2 in x_coords]
     # Preform the same operation on these columns to form more cropped images.
@@ -60,8 +73,8 @@ def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
             if sum(col_img[pos_y]) == 0: blank_ys.append(pos_y)
         y_coords = []
         for i in range(1, len(blank_ys)):
-            if blank_ys[i]-blank_ys[i-1] > min_crop_size:
-                y_coords.append((blank_ys[i-1], blank_ys[i]))
+            if blank_ys[i] - blank_ys[i - 1] > min_crop_size:
+                y_coords.append((blank_ys[i - 1], blank_ys[i]))
         for y_1, y_2 in y_coords:
             y_cropped_images.append(x_column_images[j][y_1:y_2])
             y_cropped_images_edges.append(col_img[y_1:y_2])
@@ -71,14 +84,15 @@ def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
         y, x = np.shape(y_crop_img_edges)
         blank_xs = []
         for pos_x in range(x):
-            if sum(y_crop_img_edges[:,pos_x]) == 0: blank_xs.append(pos_x)
+            if sum(y_crop_img_edges[:, pos_x]) == 0: blank_xs.append(pos_x)
         blank_xs.append(x)
         x_coords = []
         for i in range(1, len(blank_xs)):
-            if blank_xs[i]-blank_xs[i-1] > min_crop_size:
-                x_coords.append((blank_xs[i-1], blank_xs[i]))
-        cropped_images += [y_cropped_images[k][:,x_1:x_2] for x_1, x_2 in x_coords]
+            if blank_xs[i] - blank_xs[i - 1] > min_crop_size:
+                x_coords.append((blank_xs[i - 1], blank_xs[i]))
+        cropped_images += [y_cropped_images[k][:, x_1:x_2] for x_1, x_2 in x_coords]
     return cropped_images
+
 
 def normalize_image_sizes(images):
     '''
@@ -90,20 +104,7 @@ def normalize_image_sizes(images):
     '''
     new_size = max(np.shape(image) for image in images)
     print(new_size)
-
-def load_images(path):
-    '''
-    Load the images contained within the folder path into a list of numpy matrices representing these images.
-    :param path: Path to the folder containing images.
-    :return: A list containing the loaded images.
-    '''
-    assert(os.path.isdir(path))
-    images = []
-    for filename in os.listdir(path):
-        img = cv2.imread(os.path.join(path, filename))
-        if img is not None:
-            images.append(img)
-    return images
+    # TODO: Complete function
 
 def show(img, title='frame'):
     '''
@@ -114,3 +115,14 @@ def show(img, title='frame'):
     cv2.imshow(title, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+def take_image():
+    '''
+    So short it might not even be kept, just takes a picture! Probably not going to be used in actuality, since
+    there is a computational cost associated with the creation and release of captures, but for testing is decent.
+    :return: Returns an image taken with the primary webcam(if present) from the main camera.
+    '''
+    capture = cv2.VideoCapture(0)
+    ret, frame = capture.read()
+    capture.release()
+    return frame
