@@ -1,6 +1,9 @@
 body{
     background-color:white;
 }
+.blog-entry{
+    padding:20px;
+}
 .btn {
     display: inline-block;
     margin-bottom: 1rem;
@@ -16,20 +19,23 @@ body{
     margin-top:0px;
     max-width:1200px;
 }
-.blog-entry{
-    padding:20px;
-}
-.stretch{
-    background-color:darkslategrey;
-    width:100%;
-}
-.overview{
-    padding:20px;
-    color:white;
-}
 .jumbotron{
     color:white;
     background-image: url("img/edge2.png");
     text-align: center;
     margin-bottom:0px;
+}
+.overview{
+    padding:20px;
+    color:white;
+}
+.signature{
+    color:darkgray;
+    text-align:right;
+    width:100%;
+    font-style: italic;
+}
+.stretch{
+    background-color:darkslategrey;
+    width:100%;
 }
