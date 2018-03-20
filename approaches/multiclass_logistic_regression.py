@@ -1,9 +1,11 @@
+from approaches.approach import Approach
+
 import numpy as np
 import logging
 import progressbar
 
-class Multiclass_Logistic_Regression():
-    def classify(self, W, row):
+class Multiclass_Logistic_Regression(Approach):
+    def classify_datum(self, W, row):
         val = [np.dot(W[k], row) for k in range(np.shape(W)[0])]
         classification_vector = [1 if k == val.index(max(val)) else 0 for k in range(self.K)]
         return classification_vector
@@ -50,7 +52,7 @@ class Multiclass_Logistic_Regression():
                 W_new[k] = Theta[k] - (learning_rate * gradient(Theta, training_data, labels, k, K))
             Theta = np.copy(W_new)
 
-        return Theta
+        self.weights = Theta
 
     def label_to_vector(self, x, K):
         '''
