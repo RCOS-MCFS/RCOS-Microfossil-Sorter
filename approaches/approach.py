@@ -1,7 +1,10 @@
+from sklearn import svm
+
 import numpy as np
 import logging
+import os
+import pickle
 import progressbar
-from sklearn import svm
 
 
 class Approach():
@@ -9,6 +12,10 @@ class Approach():
         self.weights = None
 
     def assess_accuracy(self, test_data):
+        '''
+        :param test_data: Numpy data to be used as testing, with the final value in each row being the label
+        :return: A value between 0.00 and 1.00 representing the accuracy of the model.
+        '''
         labels = test_data[:,-1]
         test_data = test_data[:,0:-1]
         classifications = self.classify(test_data)
@@ -16,24 +23,53 @@ class Approach():
         return correct_count/len(classifications)
 
     def classify(self, data):
-        if len(data) == 1:
-            return self.classify_datum(self.weights, data)
-        if len(data) > 1:
-            return [self.classify_datum(self.weights, d) for d in data]
-        else:
-            raise ValueError("No data passed.")
+        '''
+        :param data: A list of numpy matrices to be classified
+        :return: A list of the generated classifications for each numpy matrix passed
+        '''
+
+        return [self.classify_datum(self.weights, d) for d in data]
+
+    def load_weights(self, input):
+        '''
+        :param input: The pickle file to be used for loading these weights
+        :return: None
+        '''
+        if not os.path.isfile(input):
+            raise ValueError("Input path " + input + "does not link to an actual file.")
+        if ".p" not in input:
+            raise ValueError("Input file must terminate in .p, indicating a pickle file")
+        self.weights = pickle.load(input, "rb")
 
     def get_weights(self):
+        '''
+        :return: The weights for this model
+        '''
         if self.weights:
             return self.weights
         else:
-            raise NameError("Weights have not yet been trained.")
+            raise NameError("No weights currently exist.")
 
     def set_weights(self, new_weights):
+        '''
+        :param new_weights: Weights being passed in.
+        :return: None
+        '''
         if new_weights and len(new_weights) > 0:
             self.weights = new_weights
         else:
             raise ValueError("No data passed")
+
+    def write_weights(self, output):
+        '''
+        :param output: The filename to which these weights are being printed.
+        :return: None
+        '''
+        if self.weights == None:
+            raise NameError("No weights currently exist.")
+        if ".p" not in output:
+            raise ValueError("Output must end in the extension .p")
+        pickle.dump(self.weights, open(output, "wb"))
 
 class Multiclass_Logistic_Regression(Approach):
     def classify_datum(self, W, row):

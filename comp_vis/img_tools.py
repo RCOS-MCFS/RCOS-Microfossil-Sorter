@@ -1,3 +1,5 @@
+# Tools for the analysis, loading, and alteration of images.
+
 import cv2
 import numpy as np
 import os
@@ -10,39 +12,8 @@ def average_color(image):
     '''
     return [image[:, :, i].mean() for i in range(image.shape[-1])]
 
-def crop_image(image, gaus=25, min_crop_size=7):
-    '''
-    The above function is meant for the cropping of multiple objects from a single photo
-    This is for refining a single image.
 
-    If no images are detected, or too many are detected, returns type None, which
-    should be interpreted as an error by the receiving function.
-    '''
-    crops = generate_cropped_from_multi(image, gaus, min_crop_size)
-    if len(crops) == 0:
-        print("ERROR: No cropable area found in image. Try adjusting parameters.")
-        return None
-    elif len(crops) > 1:
-        print("ERROR: Too many images found in image. Try adjusting parameters.")
-        return None
-    else:
-        return crops[0]
-
-def load_images(path):
-    '''
-    Load the images contained within the folder path into a list of numpy matrices representing these images.
-    :param path: Path to the folder containing images.
-    :return: A list containing the loaded images.
-    '''
-    assert (os.path.isdir(path))
-    images = []
-    for filename in os.listdir(path):
-        img = cv2.imread(os.path.join(path, filename))
-        if img is not None:
-            images.append(img)
-    return images
-
-def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
+def crop_image_all(img, gaus=25, min_crop_size=7):
     '''
     :param img: Numpy matrix representing the image to be broken into cropped images.
     :param gaus: The level of gaussian blur, used to reduce noise in edges.
@@ -93,6 +64,44 @@ def generate_cropped_from_multi(img, gaus=25, min_crop_size=7):
         cropped_images += [y_cropped_images[k][:, x_1:x_2] for x_1, x_2 in x_coords]
     return cropped_images
 
+def crop_image_single(image, gaus=25, min_crop_size=7):
+    '''
+    The above function is meant for the cropping of multiple objects from a single photo
+    This is for refining a single image.
+
+    If no images are detected, or too many are detected, returns type None, which
+    should be interpreted as an error by the receiving function.
+    '''
+    crops = crop_image_all(image, gaus, min_crop_size)
+    if len(crops) == 0:
+        print("ERROR: No cropable area found in image. Try adjusting parameters.")
+        return None
+    elif len(crops) > 1:
+        print("ERROR: Too many images found in image. Try adjusting parameters.")
+        return None
+    else:
+        return crops[0]
+
+def get_images_dimensions(images, normalized=False, ordered=False):
+    '''
+    :param images: List of images for which the dimensions are returned
+    :param normalized: If true, returns the dimensions unordered as a ratio of one to the other, i.e. a square would be
+                     (1, 1), whilst a rectangle with the wide edge twice the length of the short would be (.5, 2).
+                     If working with objects of disparate sizes in which oblong-ness is an important feature, this might
+                     be a valuable piece of data
+    :param ordered: Returns the larger of the two values first, such that the same rectangle would return the same
+                    dimensions even if it was on it's side or standing up.
+    :return: A list of tuples representing the height and width dimensions. (Z values, if present, are ignored.)
+    '''
+    ret_list = []
+    for image in images:
+        a, b = np.shape(image)[0:2]
+        if ordered:
+            a, b = max(a, b), min(a, b)
+        if normalized:
+            a, b = a/b, b/a
+        ret_list.append((a, b))
+    return ret_list
 
 def normalize_image_sizes(images):
     '''
@@ -105,6 +114,20 @@ def normalize_image_sizes(images):
     new_size = max(np.shape(image) for image in images)
     print(new_size)
     # TODO: Complete function
+
+def load_images(path):
+    '''
+    Load the images contained within the folder path into a list of numpy matrices representing these images.
+    :param path: Path to the folder containing images.
+    :return: A list containing the loaded images.
+    '''
+    assert (os.path.isdir(path))
+    images = []
+    for filename in os.listdir(path):
+        img = cv2.imread(os.path.join(path, filename))
+        if img is not None:
+            images.append(img)
+    return images
 
 def show(img, title='frame'):
     '''
