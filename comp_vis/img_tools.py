@@ -82,6 +82,11 @@ def crop_image_single(image, gaus=25, min_crop_size=7):
     else:
         return crops[0]
 
+def get_edges(img, gaus=25):
+    blur = cv2.GaussianBlur(img, (gaus, gaus), 0)
+    edges = cv2.Canny(blur, 50, 50)
+    return edges
+
 def get_images_dimensions(images, normalized=False, ordered=False):
     '''
     :param images: List of images for which the dimensions are returned

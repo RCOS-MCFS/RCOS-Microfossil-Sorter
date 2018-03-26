@@ -4,6 +4,7 @@ from approaches.approach import Multiclass_Logistic_Regression, Perceptron, Skle
 import cv2
 import comp_vis.img_tools as it
 import os
+import random
 import sys
 
 
@@ -69,7 +70,7 @@ elif len(sys.argv) == 5:
     # Add on the size of these objects. Might be unnecessary down the road, but presently it does increase accuracy.
     bone_dims = it.get_images_dimensions(bone_images, ordered=True)
     rock_dims = it.get_images_dimensions(rock_images, ordered=True)
-    assert(len(bone_dims) == len(bone_avgs) && len(rock_dims) == len(rock_avgs))
+    assert(len(bone_dims) == len(bone_avgs) and len(rock_dims) == len(rock_avgs))
     # We will also label these values as long as we've got them here.
     bone_data = [bone_avgs[i] + bone_dims[i] + [1] for i in range(len(bone_images))]
     rock_data = [rock_avgs[i] + rock_dims[i] + [0] for i in range(len(rock_images))]
