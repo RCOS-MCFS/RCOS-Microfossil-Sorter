@@ -9,23 +9,23 @@ def main():
     if len(sys.argv) < 4:
         sys.stderr.write("ERROR: Not all arguments provided. Should follow format:\n" +
                          "data_maker.py [camera_num (usually 0)] [bones_write_path] [rocks_write_path]")
-        exit()
+        exit(1)
 
     camera_num  = int(sys.argv[1])
     bones_write_path = sys.argv[2]
     rocks_write_path = sys.argv[3]
 
-    # Assert directories exist
+    # Create directories if they do not yet exist.
     if not os.path.isdir(bones_write_path):
-        sys.stderr.write("ERROR: Directory " + bones_write_path + " not found.")
+        os.makedirs(bones_write_path)
     if not os.path.isdir(rocks_write_path):
-        sys.stderr.write("ERROR: Directory " + rocks_write_path + " not found.")
+        os.makedirs(rocks_write_path)
 
     # Variables used in output styling later on
     font = cv2.FONT_HERSHEY_SIMPLEX
     instruction_text = "'r' = rock - 'b' = Bone"
 
-    capture = cv2.VideoCapture(0)
+    capture = cv2.VideoCapture(camera_num)
 
     # Numbers corresponding to various key presses.
     q = 113

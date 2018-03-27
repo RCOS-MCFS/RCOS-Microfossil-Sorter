@@ -106,7 +106,7 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4):
+def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_contour_area = 500):
     '''
     :param img: RGB image to be converted.
     :return: TODO: restate
@@ -122,19 +122,28 @@ def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4):
 
     im2, contours, hierarchy = cv2.findContours(closing, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
+    def touches_edge(contour):
+        '''
+        :param contour: Contour to examined
+        :return: True if the contour touches the edge fo the image, false otherwise
+        '''
+        coordinates = coordinates_from_contour(contour)
+        return (0 in coordinates[0] or coordinates[1][0] == x or coordinates[1][1] == y)
+
     if discount_out_of_bounds:
-        # Todo: Find quick way to remove out of contours which touch the edge
-        _ = 1
+        contours = [contour for contour in contours if not touches_edge(contour)]
 
     if contours:
         max_area = np.shape(img)[0]*np.shape(img)[1]
         max_area *= .9
-        areas = [cv2.contourArea(contour) for contour in contours if cv2.contourArea(contour) < max_area]
+        # Get the areas for all the contours, and label them with the contour they relate to
+        areas = [(cv2.contourArea(contour), i) for i, contour in enumerate(contours)]
+        # Weed out those areas small enough to be meaningless noise or large enough to be glitches
+        areas = [area for area in areas if area[0] < max_area and area[0] > min_contour_area]
         if areas:
-            largest_contour = contours[areas.index(max(areas))]
-            coordinates = coordinates_from_contour(largest_contour)
-            cropped_img = img[coordinates[0][0]:coordinates[1][0], coordinates[0][1]:coordinates[1][1]]
+            largest_contour = contours[max(areas)[1]]
             return thresh, largest_contour
+
     return thresh, None
 
 def normalize_image_sizes(images):
