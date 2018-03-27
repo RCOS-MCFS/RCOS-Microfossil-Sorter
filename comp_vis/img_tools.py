@@ -74,12 +74,11 @@ def crop_image_all(img, gaus=25, min_crop_size=7):
         cropped_images += [y_cropped_images[k][:, x_1:x_2] for x_1, x_2 in x_coords]
     return cropped_images
 
-def get_contours(img):
-    # Convert to greyscale
-    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    ret, thresh = cv2.threshold(gray, 127, 255, 0)
-    im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    return contours
+def crop_to_contour(img, contour):
+    # TODO: REDO SO THAT IT ONLY HAS THE CONTENTS OF THE CONTOUR, RATHER THAN RECTANGLE AROUND IT
+    coordinates = coordinates_from_contour(contour)
+    cropped = img[coordinates[0][1]:coordinates[1][1], coordinates[0][0]:coordinates[1][0]]
+    return cropped
 
 def get_edges(img, gaus=25):
     blur = cv2.GaussianBlur(img, (gaus, gaus), 0)
@@ -107,13 +106,21 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True):
+def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4):
     '''
     :param img: RGB image to be converted.
-    :return: The cropped object, as well as the coordinates of that object. Returns none on failure.
+    :return: TODO: restate
     '''
     y, x, _ = np.shape(img)
-    contours = get_contours(img)
+    # Convert to greyscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)
+    kernel = np.ones((kernel_size, kernel_size), np.uint8)
+    erosion = cv2.erode(thresh, kernel, iterations=1)
+    opening = cv2.morphologyEx(erosion, cv2.MORPH_OPEN, kernel)
+    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+
+    im2, contours, hierarchy = cv2.findContours(closing, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     if discount_out_of_bounds:
         # Todo: Find quick way to remove out of contours which touch the edge
@@ -127,8 +134,8 @@ def get_largest_object(img, discount_out_of_bounds=True):
             largest_contour = contours[areas.index(max(areas))]
             coordinates = coordinates_from_contour(largest_contour)
             cropped_img = img[coordinates[0][0]:coordinates[1][0], coordinates[0][1]:coordinates[1][1]]
-            return cropped_img, coordinates
-    return None
+            return thresh, largest_contour
+    return thresh, None
 
 def normalize_image_sizes(images):
     '''
@@ -155,16 +162,6 @@ def load_images(path):
         if img is not None:
             images.append(img)
     return images
-
-def show(img, title='frame'):
-    '''
-    Shorthand for displaying images in a common way.
-    :param img: Image to be displayed
-    :return: None
-    '''
-    cv2.imshow(title, img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
 def take_image():
     '''

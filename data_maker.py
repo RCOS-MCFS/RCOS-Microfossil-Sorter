@@ -1,29 +1,80 @@
 
 import comp_vis.img_tools as it
 import cv2
+import os
+import sys
 
 def main():
+    # Check that requisite arguments have been provided
+    if len(sys.argv) < 4:
+        sys.stderr.write("ERROR: Not all arguments provided. Should follow format:\n" +
+                         "data_maker.py [camera_num (usually 0)] [bones_write_path] [rocks_write_path]")
+        exit()
+
+    camera_num  = int(sys.argv[1])
+    bones_write_path = sys.argv[2]
+    rocks_write_path = sys.argv[3]
+
+    # Assert directories exist
+    if not os.path.isdir(bones_write_path):
+        sys.stderr.write("ERROR: Directory " + bones_write_path + " not found.")
+    if not os.path.isdir(rocks_write_path):
+        sys.stderr.write("ERROR: Directory " + rocks_write_path + " not found.")
+
     # Variables used in output styling later on
     font = cv2.FONT_HERSHEY_SIMPLEX
-    bottomLeftCornerOfText = (2, 400)
-    fontScale = 1
-    lineType = 2
-    color_bad = (0, 0, 255)
-    color_good = (0, 255, 0)
-    display_text = ""
-    display_color = (0, 0, 0)
+    instruction_text = "'r' = rock - 'b' = Bone"
 
     capture = cv2.VideoCapture(0)
+
+    # Numbers corresponding to various key presses.
+    q = 113
+    r = 114
+    b = 98
+
+    # Used to save objects
+    rock_counter = 0
+    bone_counter = 0
+
+    # Number of frames between presses
+    time_till_next_press = 0
+    frames_between_presses = 10
+
+    # Todo: Add parameter so that existing files won't be overwritten
 
     while True:
         # Take in the current frame of the video
         ret, frame = capture.read()
         # check for a clearly defined object in the current frame
-        cropped_img, coordinates = it.get_largest_object(frame)
-        cv2.rectangle(frame, coordinates[0], coordinates[1], (255, 0, 0), 2)
+        thresh, contour = it.get_largest_object(frame)
+
+        # If a contour is found, we display it for use in debugging.
+        if contour is not None:
+            original = frame.copy()
+            cv2.drawContours(frame, [contour], 0, (0, 255, 0), 2)
+
+        cv2.putText(frame, instruction_text, (10, 30), font, 1, (255, 255, 255), 0, cv2.LINE_AA)
+        if time_till_next_press > 0:
+            cv2.putText(frame, 'Saved!', (10, 300), font, 1, (0, 255, 0), 0, cv2.LINE_AA)
         cv2.imshow('frame', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        # cv2.imshow('threshhold', thresh)
+        key = cv2.waitKey(1)
+
+        if key == q:
             break
+        elif contour is not None and time_till_next_press == 0:
+            if key == r:
+                cropped_image = it.crop_to_contour(original, contour)
+                cv2.imwrite(rocks_write_path + '/rock_' + str(rock_counter) + '.png', cropped_image)
+                time_till_next_press = frames_between_presses
+                rock_counter += 1
+            elif key == b:
+                cropped_image = it.crop_to_contour(original, contour)
+                cv2.imwrite(bones_write_path + '/bone_' + str(bone_counter) + '.png', cropped_image)
+                time_till_next_press = frames_between_presses
+                bone_counter += 1
+
+        time_till_next_press = max(time_till_next_press-1, 0)
 
     capture.release()
 
