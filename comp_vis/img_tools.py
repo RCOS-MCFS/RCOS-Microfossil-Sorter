@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import os
 import random
+import sys
 
 def average_color(image):
     '''
@@ -12,8 +13,17 @@ def average_color(image):
     '''
     return [image[:, :, i].mean() for i in range(image.shape[-1])]
 
+def coordinates_from_contour(contour):
+    '''
+    :param contour: the contour to be analyzed
+    :return: A tuple containing two tuples, for the top-left and bottom-right of the area covered by the contour.
+    '''
+    top_left = ((min([point[0][0] for point in contour])), (min([point[0][1] for point in contour])))
+    bottom_right = ((max([point[0][0] for point in contour])), (max([point[0][1] for point in contour])))
+    return top_left, bottom_right
 
 def crop_image_all(img, gaus=25, min_crop_size=7):
+    # Todo: Redo function to make use of faster contouring system
     '''
     :param img: Numpy matrix representing the image to be broken into cropped images.
     :param gaus: The level of gaussian blur, used to reduce noise in edges.
@@ -64,23 +74,12 @@ def crop_image_all(img, gaus=25, min_crop_size=7):
         cropped_images += [y_cropped_images[k][:, x_1:x_2] for x_1, x_2 in x_coords]
     return cropped_images
 
-def crop_image_single(image, gaus=25, min_crop_size=7):
-    '''
-    The above function is meant for the cropping of multiple objects from a single photo
-    This is for refining a single image.
-
-    If no images are detected, or too many are detected, returns type None, which
-    should be interpreted as an error by the receiving function.
-    '''
-    crops = crop_image_all(image, gaus, min_crop_size)
-    if len(crops) == 0:
-        print("ERROR: No cropable area found in image. Try adjusting parameters.")
-        return None
-    elif len(crops) > 1:
-        print("ERROR: Too many images found in image. Try adjusting parameters.")
-        return None
-    else:
-        return crops[0]
+def get_contours(img):
+    # Convert to greyscale
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    ret, thresh = cv2.threshold(gray, 127, 255, 0)
+    im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    return contours
 
 def get_edges(img, gaus=25):
     blur = cv2.GaussianBlur(img, (gaus, gaus), 0)
@@ -107,6 +106,29 @@ def get_images_dimensions(images, normalized=False, ordered=False):
             a, b = a/b, b/a
         ret_list.append((a, b))
     return ret_list
+
+def get_largest_object(img, discount_out_of_bounds=True):
+    '''
+    :param img: RGB image to be converted.
+    :return: The cropped object, as well as the coordinates of that object. Returns none on failure.
+    '''
+    y, x, _ = np.shape(img)
+    contours = get_contours(img)
+
+    if discount_out_of_bounds:
+        # Todo: Find quick way to remove out of contours which touch the edge
+        _ = 1
+
+    if contours:
+        max_area = np.shape(img)[0]*np.shape(img)[1]
+        max_area *= .9
+        areas = [cv2.contourArea(contour) for contour in contours if cv2.contourArea(contour) < max_area]
+        if areas:
+            largest_contour = contours[areas.index(max(areas))]
+            coordinates = coordinates_from_contour(largest_contour)
+            cropped_img = img[coordinates[0][0]:coordinates[1][0], coordinates[0][1]:coordinates[1][1]]
+            return cropped_img, coordinates
+    return None
 
 def normalize_image_sizes(images):
     '''
