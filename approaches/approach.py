@@ -164,6 +164,7 @@ class Perceptron(Approach):
         bar = progressbar.ProgressBar()
         for epoch in bar(range(epochs)):
             learning_rate *= .995
+            
             for i, row in enumerate(training_data):
                 prediction = self.classify_datum(weights, row, act_type)
                 error = classifications[i] - prediction
