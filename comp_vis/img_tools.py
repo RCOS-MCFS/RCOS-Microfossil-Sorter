@@ -22,7 +22,18 @@ def coordinates_from_contour(contour):
     bottom_right = ((max([point[0][0] for point in contour])), (max([point[0][1] for point in contour])))
     return top_left, bottom_right
 
-def crop_image_all(img, gaus=25, min_crop_size=7):
+def crop_image(image):
+    '''
+    :param image: Image to be cropped
+    :return: Return a cropped image of the largest object in this image, or the whole image if no object detected.
+    This is a bit redundant, but it's here for clarity in the demo functions.
+    '''
+    _, contour = get_largest_object(image)
+    if contour is not None:
+        return crop_to_contour(image, contour)
+    return image
+
+def crop_image_multi(img, gaus=25, min_crop_size=7):
     # Todo: Redo function to make use of faster contouring system
     '''
     :param img: Numpy matrix representing the image to be broken into cropped images.
@@ -96,6 +107,9 @@ def get_images_dimensions(images, normalized=False, ordered=False):
                     dimensions even if it was on it's side or standing up.
     :return: A list of tuples representing the height and width dimensions. (Z values, if present, are ignored.)
     '''
+    if type(images) != type([1,2,3]):
+        return get_images_dimensions(list([images]), normalized, ordered)[0]
+
     ret_list = []
     for image in images:
         a, b = np.shape(image)[0:2]
