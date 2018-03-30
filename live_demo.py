@@ -38,6 +38,7 @@ if len(sys.argv) == 4:
     # Then load weight from location
     if not os.path.isfile(sys.argv[3]):
         sys.stderr.write("Error: No file found at path " + sys.argv[3])
+        exit()
     model.load_weights(sys.argv[4])
 elif len(sys.argv) == 5:
     # Load bones and rocks

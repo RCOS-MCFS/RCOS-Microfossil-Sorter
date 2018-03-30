@@ -158,7 +158,12 @@ def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_cont
             largest_contour = contours[max(areas)[1]]
             return thresh, largest_contour
 
-    return thresh, None
+        areas = [cv2.contourArea(contour) for contour in contours if cv2.contourArea(contour) < max_area]
+        if areas:
+            largest_contour = contours[areas.index(max(areas))]
+            coordinates = coordinates_from_contour(largest_contour)
+            cropped_img = img[coordinates[0][0]:coordinates[1][0], coordinates[0][1]:coordinates[1][1]]
+            return thresh, largest_contour
 
 def normalize_image_sizes(images):
     '''
