@@ -24,11 +24,13 @@ class Approach():
 
     def classify(self, data):
         '''
-        :param data: A list of numpy matrices to be classified
+        :param data: A list of numpy matrices to be classified, or single matrix
         :return: A list of the generated classifications for each numpy matrix passed
         '''
-
-        return [self.classify_datum(self.weights, d) for d in data]
+        if len(np.shape(data)) == 2:
+            return [self.classify_datum(self.weights, d) for d in data]
+        else:
+            return self.classify_datum(self.weights, data)
 
     def load_weights(self, input):
         '''
@@ -162,8 +164,7 @@ class Perceptron(Approach):
         bar = progressbar.ProgressBar()
         for epoch in bar(range(epochs)):
             learning_rate *= .995
-            if epoch%30 == 0:
-                print(learning_rate)
+            
             for i, row in enumerate(training_data):
                 prediction = self.classify_datum(weights, row, act_type)
                 error = classifications[i] - prediction

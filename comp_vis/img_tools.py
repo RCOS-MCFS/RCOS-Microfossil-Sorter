@@ -22,7 +22,18 @@ def coordinates_from_contour(contour):
     bottom_right = ((max([point[0][0] for point in contour])), (max([point[0][1] for point in contour])))
     return top_left, bottom_right
 
-def crop_image_all(img, gaus=25, min_crop_size=7):
+def crop_image(image):
+    '''
+    :param image: Image to be cropped
+    :return: Return a cropped image of the largest object in this image, or the whole image if no object detected.
+    This is a bit redundant, but it's here for clarity in the demo functions.
+    '''
+    _, contour = get_largest_object(image)
+    if contour is not None:
+        return crop_to_contour(image, contour)
+    return image
+
+def crop_image_multi(img, gaus=25, min_crop_size=7):
     # Todo: Redo function to make use of faster contouring system
     '''
     :param img: Numpy matrix representing the image to be broken into cropped images.
@@ -96,6 +107,9 @@ def get_images_dimensions(images, normalized=False, ordered=False):
                     dimensions even if it was on it's side or standing up.
     :return: A list of tuples representing the height and width dimensions. (Z values, if present, are ignored.)
     '''
+    if type(images) != type([1,2,3]):
+        return get_images_dimensions(list([images]), normalized, ordered)[0]
+
     ret_list = []
     for image in images:
         a, b = np.shape(image)[0:2]
@@ -106,7 +120,7 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4):
+def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_contour_area = 500):
     '''
     :param img: RGB image to be converted.
     :return: TODO: restate
@@ -122,20 +136,34 @@ def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4):
 
     im2, contours, hierarchy = cv2.findContours(closing, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
+    def touches_edge(contour):
+        '''
+        :param contour: Contour to examined
+        :return: True if the contour touches the edge fo the image, false otherwise
+        '''
+        coordinates = coordinates_from_contour(contour)
+        return (0 in coordinates[0] or coordinates[1][0] == x or coordinates[1][1] == y)
+
     if discount_out_of_bounds:
-        # Todo: Find quick way to remove out of contours which touch the edge
-        _ = 1
+        contours = [contour for contour in contours if not touches_edge(contour)]
 
     if contours:
         max_area = np.shape(img)[0]*np.shape(img)[1]
         max_area *= .9
+        # Get the areas for all the contours, and label them with the contour they relate to
+        areas = [(cv2.contourArea(contour), i) for i, contour in enumerate(contours)]
+        # Weed out those areas small enough to be meaningless noise or large enough to be glitches
+        areas = [area for area in areas if area[0] < max_area and area[0] > min_contour_area]
+        if areas:
+            largest_contour = contours[max(areas)[1]]
+            return thresh, largest_contour
+
         areas = [cv2.contourArea(contour) for contour in contours if cv2.contourArea(contour) < max_area]
         if areas:
             largest_contour = contours[areas.index(max(areas))]
             coordinates = coordinates_from_contour(largest_contour)
             cropped_img = img[coordinates[0][0]:coordinates[1][0], coordinates[0][1]:coordinates[1][1]]
             return thresh, largest_contour
-    return thresh, None
 
 def normalize_image_sizes(images):
     '''
