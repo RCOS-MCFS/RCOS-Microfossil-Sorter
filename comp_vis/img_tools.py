@@ -120,7 +120,7 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_contour_area = 500):
+def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_contour_area = 400):
     '''
     :param img: RGB image to be converted.
     :return: TODO: restate

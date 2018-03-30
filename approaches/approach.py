@@ -77,9 +77,9 @@ class Multiclass_Logistic_Regression(Approach):
     def classify_datum(self, W, row):
         val = [np.dot(W[k], row) for k in range(np.shape(W)[0])]
         classification_vector = [1 if k == val.index(max(val)) else 0 for k in range(self.K)]
-        return classification_vector
+        return classification_vector.index(max(classification_vector))
 
-    def train(self, training_data, learning_rate=0.05, max_epochs=10):
+    def train(self, training_data, learning_rate=0.05, max_epochs=1000):
         '''
         :param training_data: A matrix containing the data to be examined, with the final column being the label of this data
         :param learning_rate: The rate at which the intro changes.
@@ -175,7 +175,8 @@ class Perceptron(Approach):
 class Sklearn_SVM(Approach):
 
     def classify_datum(self, clf, row):
-        return clf.predict(row)[0]
+        retval = clf.predict([row])[0]
+        return retval
 
     def train(self, training_data):
         train_values = training_data[:, -1]
