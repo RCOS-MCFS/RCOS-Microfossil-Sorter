@@ -92,6 +92,9 @@ def crop_to_contour(img, contour):
     return cropped
 
 def get_edges(img, gaus=25):
+    '''
+    DEPREECATED
+    '''
     blur = cv2.GaussianBlur(img, (gaus, gaus), 0)
     edges = cv2.Canny(blur, 50, 50)
     return edges
@@ -120,7 +123,7 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_contour_area = 500):
+def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_contour_area = 1500):
     '''
     :param img: RGB image to be converted.
     :return: TODO: restate
@@ -158,12 +161,7 @@ def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_cont
             largest_contour = contours[max(areas)[1]]
             return thresh, largest_contour
 
-        areas = [cv2.contourArea(contour) for contour in contours if cv2.contourArea(contour) < max_area]
-        if areas:
-            largest_contour = contours[areas.index(max(areas))]
-            coordinates = coordinates_from_contour(largest_contour)
-            cropped_img = img[coordinates[0][0]:coordinates[1][0], coordinates[0][1]:coordinates[1][1]]
-            return thresh, largest_contour
+    return thresh, None
 
 def normalize_image_sizes(images):
     '''
@@ -190,14 +188,3 @@ def load_images(path):
         if img is not None:
             images.append(img)
     return images
-
-def take_image():
-    '''
-    So short it might not even be kept, just takes a picture! Probably not going to be used in actuality, since
-    there is a computational cost associated with the creation and release of captures, but for testing is decent.
-    :return: Returns an image taken with the primary webcam(if present) from the main camera.
-    '''
-    capture = cv2.VideoCapture(0)
-    ret, frame = capture.read()
-    capture.release()
-    return frame

@@ -7,7 +7,9 @@ import numpy as np
 import os
 import random
 import sys
+import time
 
+already_cropped = True
 
 label = { 1:'bone',
           0:'rock',}
@@ -27,7 +29,7 @@ if approach_name == "perceptron":
 elif approach_name == "multiclass":
     model = Multiclass_Logistic_Regression()
 elif approach_name == "sklearn_svm":
-    model = Multiclass_Logistic_Regression()
+    model = Sklearn_SVM()
 else:
     sys.stderr.write("Error: Invalid model name " + sys.argv[1] + " given.")
     exit()
@@ -56,17 +58,19 @@ elif len(sys.argv) == 5:
     bone_images_whole = it.load_images(bones_path)
     rock_images_whole = it.load_images(rocks_path)
 
+    print(len(bone_images_whole))
+
     # Crop the images appropriately
     bone_images = []
     for img in bone_images_whole:
         cropped_img = it.crop_image(img)
-        if np.shape(cropped_img) != np.shape(img):
+        if np.shape(cropped_img) != np.shape(img) or already_cropped:
             bone_images += [cropped_img]
 
     rock_images = []
     for img in rock_images_whole:
         cropped_img = it.crop_image(img)
-        if np.shape(cropped_img) != np.shape(img):
+        if np.shape(cropped_img) != np.shape(img) or already_cropped:
             rock_images += [cropped_img]
     if len(bone_images) < 30 or len(rock_images) < 30:
         sys.stderr.write("Warning: Only " + str(len(bone_images)) + " bones and " + str(len(rock_images)) +
@@ -92,14 +96,17 @@ elif len(sys.argv) == 5:
     data = np.array([np.array(x) for x in data])
 
     # Segment training and testing data
-    training_percentage = 0.30
-    training_size = int(0.30 * len(data))
+    training_percentage = 0.50
+    training_size = int(training_percentage * len(data))
     # Since already shuffled, we can just take the first training_size number of specimens.
     training_data, testing_data = data[0:training_size], data[training_size:]
 
+    time.sleep(3)
+
     model.train(training_data)
 
-    # TODO: Reevaluate later: Is this the best approach? Better to have no testing here and use the full set to train?
+
+
     print("Accuracy on loaded data: " + str(model.assess_accuracy(testing_data)))
 else:
     sys.stderr.write("Error: Too many command-line arguments given.\n" 
@@ -127,26 +134,27 @@ while True:
     _, contour = it.get_largest_object(frame)
     if contour is not None:
         cropped_image = it.crop_to_contour(frame, contour)
-        a, b = it.get_images_dimensions(cropped_img, ordered=True)
+        a, b = it.get_images_dimensions(cropped_img, normalized=True, ordered=True)
         contour_coordinates = it.coordinates_from_contour(contour)
         cropped_img_avg = it.average_color(cropped_img)
         datum = cropped_img_avg + [float(a), float(b)]
         datum = np.array(datum)
         response = model.classify(datum)
+
         response_text = label[response]
         display_coord = ((contour_coordinates[0][0] + contour_coordinates[1][0])/2,
                          (contour_coordinates[0][1] + contour_coordinates[1][1]) / 2)
         display_coord = (int(display_coord[0])-10, int(display_coord[1]))
+        if response_text == 'bone':
+            cv2.drawContours(frame, [contour], 0, (0, 255, 0), 2)
+        else:
+            cv2.drawContours(frame, [contour], 0, (0, 0, 255), 2)
         cv2.putText(frame, response_text,
                     display_coord,
                     font,
                     fontScale,
                     (255, 255, 255),
                     lineType)
-        if response_text == 'bone':
-            cv2.drawContours(frame, [contour], 0, (0, 255, 0), 2)
-        else:
-            cv2.drawContours(frame, [contour], 0, (0, 0, 255), 2)
     else:
         display_text = "No object detected"
         display_color = color_bad
