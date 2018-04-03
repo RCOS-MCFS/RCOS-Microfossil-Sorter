@@ -25,7 +25,80 @@
 </div>
     </div>
 </div>
-    <div class="container">
+
+
+<div class="container">
+    <div class="blog-entry">
+        <h2 class="blog-title"> Week 6, 7, 8, 9 </h2>
+        <h4 class="blog-date">April 3rd, 2018</h4>
+        <p class="blog-body">
+            <h4> Long time, no see.</h4>
+            Phew! Long time since our last blog post, which was done before spring break. But, this silence was not an
+            indicator of a lack of activity, but rather a symbol of our focus on our work! These few weeks have been
+            spent with leaning much more heavily into the visual component for the purpose of our demo which
+            was demonstrated in our class presentation last week, and working on a version of our project better suited
+            for laboratory settings.
+            <br><br>
+            <h4> What we've done. </h4>
+            Before we get to the contents of our demo, it's worth touching on the advancements in our technology that
+            have been made. As I started to lean into the live webcam based utility, it rapidly became apparent that
+            the algorithm I'd made for a quick and dirty image cropping was entirely too slow for use with a webcam,
+            as it slowed the display of the webcam's feed to about one frame a second. Much to my delight, and
+            partial annoyance that I hadn't checked for this option before leaning so heavily into my own approach,
+            it's relatively easy to string together a few OpenCV functions to detect contours in images, as well as
+            some built in functions for checking the areas of these coordinates, and other such things. And most
+            importantly, this function blew mine away in terms of speed.
+            <br><br>
+            With functions for these contours added to the img_tools library, they were applied in two settings:
+            gathering data, and live labeling of data. The data gathering program is relatively simple, you
+            run it, it shows a feed of webcam, and highlights the largest contour in the image. If the lighting environment
+            is set up correctly, this should be the only, or largest, bone/rock in the frame. Then, the user presses
+            'r' for 'b' to save the contents of that highlighted contour to a folder for rocks and bones respectively.
+            <br><br>
+            With the data gathered, we run the live data labeler. Running this file, currently live_demo.py though
+            it will be soon be refactored into a more elegant form, the user specifies the type of model they wish to
+            use, as well as the folders for the bone and rock data being used to train it. The specified model will then
+            convert these images into the appropriate format, and train on a portion of this data and print accuracy, to
+            give the user a baseline of how accurate it will be on live data. Then, it shows the webcam feed, labeling
+            rocks and bones as needed.
+            <br><br>
+            <h4> What's next? </h4>
+            Aside from the hardware, which Olivia will probably post an update on in the next week or so, upcoming software
+            tasks will be:<ul>
+                <li>
+                    Escape the command line! Since we want this to be as usable as possible, we'll work on making
+                    a more traditional UI for selecting all of what are currently command line options.
+                </li>
+                <li>
+                    Refactor our demo, which is currently a  long script, into a series of methods, for easier use and
+                    call by the aforementioned new UI, and easier extensibility in the future.
+                </li>
+                <li>
+                    Set up some utility for changing the image thresholding depending on lighting
+                    conditions, as our in-class demo classifier was ineffective because the lighting differed so much
+                    from the environment in which the currently hard-coded parameters for the threshold were established.
+                    Unfortunately, the typical approach of using a single object as a baseline with a saved perfect threshold
+                    for that object isn't entirely feasible in our case, since the microfossils are so incredibly small
+                    I can't fathom what common object could be used as this baseline, especially since no 3d printer could print
+                    something to that side. We could go with an "eye-doctor" type approach for establishing the threshold, where
+                    it cycles through various parameters asking the user if it looks better or worse before settling on a final option.
+                    Food for thought!
+                </li>
+                <li>
+                    Model improvement. I, because it was fun more than it was practical, wrote some of the models used
+                    from their equations, and should probably transfer these methods over to applications of these models
+                    which exist in certain ML libraries which are likely to be faster.
+                </li>
+                <li>
+                    Additional data gathering. With binary classification pretty much done, we should start examining
+                    additional details that can be automatically gathered.
+                </li>
+            </ul>
+
+        </p>
+        <p class="signature"> - John</p>
+    </div>
+    <hr />
     <div class="blog-entry">
         <h2 class="blog-title"> Week 5 </h2>
         <h4 class="blog-date">March 6, 2018</h4>
@@ -47,7 +120,6 @@
         <p class="signature"> - Olivia</p>
     </div>
     <hr />
-<div class="container">
     <div class="blog-entry">
         <h2 class="blog-title"> Week 4 </h2>
         <h4 class="blog-date">February 27, 2018</h4>
@@ -72,7 +144,6 @@
         <p class="signature"> - Olivia</p>
     </div>
     <hr />
-<div class="container">
     <div class="blog-entry">
         <h2 class="blog-title"> Week 4 </h2>
         <h4 class="blog-date">February 26, 2018</h4>

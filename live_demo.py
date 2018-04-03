@@ -7,6 +7,7 @@ import numpy as np
 import os
 import random
 import sys
+import time
 
 already_cropped = True
 
@@ -95,17 +96,17 @@ elif len(sys.argv) == 5:
     data = np.array([np.array(x) for x in data])
 
     # Segment training and testing data
-    training_percentage = 0.60
+    training_percentage = 0.50
     training_size = int(training_percentage * len(data))
     # Since already shuffled, we can just take the first training_size number of specimens.
     training_data, testing_data = data[0:training_size], data[training_size:]
 
-    # TODO: REMOVE! This is just for small datasets
-    testing_data = data
+    time.sleep(3)
 
     model.train(training_data)
 
-    # TODO: Reevaluate later: Is this the best approach? Better to have no testing here and use the full set to train?
+
+
     print("Accuracy on loaded data: " + str(model.assess_accuracy(testing_data)))
 else:
     sys.stderr.write("Error: Too many command-line arguments given.\n" 
@@ -133,7 +134,7 @@ while True:
     _, contour = it.get_largest_object(frame)
     if contour is not None:
         cropped_image = it.crop_to_contour(frame, contour)
-        a, b = it.get_images_dimensions(cropped_img, normalized=False, ordered=True)
+        a, b = it.get_images_dimensions(cropped_img, normalized=True, ordered=True)
         contour_coordinates = it.coordinates_from_contour(contour)
         cropped_img_avg = it.average_color(cropped_img)
         datum = cropped_img_avg + [float(a), float(b)]
@@ -144,16 +145,16 @@ while True:
         display_coord = ((contour_coordinates[0][0] + contour_coordinates[1][0])/2,
                          (contour_coordinates[0][1] + contour_coordinates[1][1]) / 2)
         display_coord = (int(display_coord[0])-10, int(display_coord[1]))
+        if response_text == 'bone':
+            cv2.drawContours(frame, [contour], 0, (0, 255, 0), 2)
+        else:
+            cv2.drawContours(frame, [contour], 0, (0, 0, 255), 2)
         cv2.putText(frame, response_text,
                     display_coord,
                     font,
                     fontScale,
                     (255, 255, 255),
                     lineType)
-        if response_text == 'bone':
-            cv2.drawContours(frame, [contour], 0, (0, 255, 0), 2)
-        else:
-            cv2.drawContours(frame, [contour], 0, (0, 0, 255), 2)
     else:
         display_text = "No object detected"
         display_color = color_bad

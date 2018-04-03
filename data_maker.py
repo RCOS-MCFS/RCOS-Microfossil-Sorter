@@ -51,7 +51,7 @@ def main():
         # If a contour is found, we display it for use in debugging.
         if contour is not None:
             original = frame.copy()
-            cv2.drawContours(frame, [contour], 0, (0, 255, 0), 2)
+            cv2.drawContours(frame, [contour], 0, (255, 0, 0), 2)
 
         cv2.putText(frame, instruction_text, (10, 30), font, 1, (255, 255, 255), 0, cv2.LINE_AA)
         if time_till_next_press > 0:
