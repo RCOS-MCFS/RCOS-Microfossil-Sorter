@@ -3,7 +3,6 @@
 import cv2
 import numpy as np
 import os
-import random
 import sys
 
 def average_color(image):
@@ -145,7 +144,7 @@ def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_cont
         :return: True if the contour touches the edge fo the image, false otherwise
         '''
         coordinates = coordinates_from_contour(contour)
-        return (0 in coordinates[0] or coordinates[1][0] == x or coordinates[1][1] == y)
+        return 0 in coordinates[0] or coordinates[1][0] == x or coordinates[1][1] == y
 
     if discount_out_of_bounds:
         contours = [contour for contour in contours if not touches_edge(contour)]
@@ -188,3 +187,23 @@ def load_images(path):
         if img is not None:
             images.append(img)
     return images
+
+def save_images(images, path):
+    '''
+    :param path: Folder to which the images in the list will be saved.
+    :param images:
+    :return: None
+    '''
+    if not os.path.isdir(path):
+        sys.stderr.write("ERROR: Path " + path + " does not exist.\nCreating folder ...")
+        try:
+            os.makedirs(path)
+        except OSError as e:
+            sys.stderr.write("ERROR: Path " + path + " could not be creating! Exiting.")
+            exit()
+
+    for i, image in enumerate(images):
+        cv2.imwrite(path + '/' + str(i) + '.png', image)
+    print("Images saved successfully.")
+
+
