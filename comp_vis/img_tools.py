@@ -32,14 +32,18 @@ def crop_image(image):
         return crop_to_contour(image, contour)
     return image
 
-def crop_image_multi(img, gaus=25, min_crop_size=7):
-    # Todo: Redo function to make use of faster contouring system
+def crop_image_from_edges(img, gaus=25, min_crop_size=7):
+    # TODO: Remove, deprecated function still used in some older tests or demonstrations, kept for posterity.
     '''
     :param img: Numpy matrix representing the image to be broken into cropped images.
     :param gaus: The level of gaussian blur, used to reduce noise in edges.
     :param min_crop_size: Smallest possible image size. Used to prevent edge noise form being cropped as its own image.
     :return: A list containing the cropped images from the source image.
     '''
+    # Print warning about the deprecated nature of this function
+    sys.stderr.write("Warning: This functino has been deprecated and will be removed in upcoming iterations. Please"
+                     "update function referencing this accordingly.")
+
     # Apply gaussian blur to help later remove the background and keep
     # background noise from forming edges in the later edgemap.
     blur = cv2.GaussianBlur(img, (gaus, gaus), 0)
@@ -122,21 +126,20 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True, kernel_size=4, min_contour_area = 1500):
+def get_largest_object(img, discount_out_of_bounds=True, min_contour_area = 1500, threshhold_settings=(128, 1, 2)):
     '''
-    :param img: RGB image to be converted.
-    :return: TODO: restate
+    :param img: An RGB OpenCV image.
+    :param discount_out_of_bounds: If true, objects touching the edges of the image are ignored. This setting is
+                                   usually on, as it can keep lighting gradients or uneven backgrounds from being
+                                   detected as an object.
+    :param min_contour_area: The smallest area of a contour we'll accept, keeping small imperfections in the background
+                             material or minor artifacts due to lighting condition from registering as objects.
+    :param threshhold_settings: A tuple containing upper_limit, erode_iter, and kernel_size to be used in thressholding.
+    :return:
     '''
-    y, x, _ = np.shape(img)
-    # Convert to greyscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    ret, thresh = cv2.threshold(gray, 60, 255, cv2.THRESH_BINARY)
-    kernel = np.ones((kernel_size, kernel_size), np.uint8)
-    erosion = cv2.erode(thresh, kernel, iterations=1)
-    opening = cv2.morphologyEx(erosion, cv2.MORPH_OPEN, kernel)
-    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
-
-    im2, contours, hierarchy = cv2.findContours(closing, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    upper_limit, erode_iter, kernel_size = threshhold_settings
+    thresh = threshhold(img, upper_limit, erode_iter, kernel_size)
+    im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     def touches_edge(contour):
         '''
@@ -207,3 +210,27 @@ def save_images(images, path):
     print("Images saved successfully.")
 
 
+def threshhold(img, upper_limit, iter, kernel_size):
+    '''
+    Given an image and parameters, returns the binary thresshold of that image. In the context of this project,
+    when given proper parameters, the white part of the returned threshhold will the the rock or bone in the image,
+    while the black will be its black backdrop.
+
+    :param img: An RGB OpenCV image
+    :param upper_limit: Integer [0..255] upper limit of brightness to be displayed in the thresshold
+    :param iter: Integer [0..] NUmber of iterations of erosion to occur on the image. Common ranges are 0 to 6,
+                 though it is partially dependent upon image resolution. Used in
+    :param kernel_size: Integer [0..] The size of the kernel in generating the thresshold. Higher values result
+                        in a less noisy image, but too high a kernel size can lead to a blockier image lacking in
+                        key details. 2 is a common value.
+    :return: OpenCV binary image.
+    '''
+    y, x, _ = np.shape(img)
+    # Convert to greyscale
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(gray, upper_limit, 255, cv2.THRESH_BINARY)
+    kernel = np.ones((kernel_size, kernel_size), np.uint8)
+    erosion = cv2.erode(thresh, kernel, iterations=iter)
+    opening = cv2.morphologyEx(erosion, cv2.MORPH_OPEN, kernel)
+    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+    return closing
