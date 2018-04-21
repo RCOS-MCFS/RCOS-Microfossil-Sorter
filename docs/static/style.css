@@ -1,5 +1,12 @@
+a:link{
+    color:inherit;
+    text-decoration:inherit;
+}
+a:visited{
+    color:inherit;
+    text-decoration:inherit;
+}
 body{
-    background-color:white;
 }
 .blog-entry{
     padding:20px;
@@ -7,45 +14,81 @@ body{
 .btn {
     display: inline-block;
     margin-bottom: 1rem;
-    color: white;
+    color: black;
     background-color: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.2);
+    border-color: rgba(0,0,0,0.2);
     border-style: solid;
     border-width: 1px;
     border-radius: 0.3rem;
     transition: color 0.2s, background-color 0.2s, border-color 0.2s;
 }
+.btn:hover {
+    background-color: rgba(255,255,255,0.8);
+
+}
+.img-center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 .container{
     margin-top:0px;
     max-width:1200px;
 }
+.container-fluid{
+    max-width:1200px;
+    padding-top:60px;
+}
+.img-background{
+    position:absolute;
+    max-width:100%;
+    right:0;
+}
 .jumbotron{
-    color:white;
+    color:black;
     background-image: url("img/edge2.png");
     text-align: center;
     margin-bottom:0px;
 }
-.landing{
+
+#top{
     padding-top:30vh;
-    background-color:transparent;
+
+
+    background: -webkit-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: -moz-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: -ms-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: -o-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+
     text-align:center;
-    color:white;
-    height:100vh;
+    color:black;
 }
 .overview{
     padding:20px;
-    color:white;
+    color:black;
 }
-
 .reveal{
     text-align:left;
-    padding-left:40%;
+    font-family:"EB Garamond";
     font-size:30px;
 }
-.partial{
-    opacity:0.1;
+.reveal-container{
+    margin: 0 auto;
+    left:100px;
+    width:600px;
 }
-
+.partial{
+    opacity:0.2;
+    padding-left:70px;
+    position:relative;
+    left:-70px;
+    -webkit-transition: opacity .3s;
+    -moz-transition: opacity .3s;
+}
+.partial:hover{
+    opacity:1;
+}
 #particles-js{
     position:fixed;
     width:100%;
@@ -56,12 +99,14 @@ body{
     -o-background-size: cover;
     background-size: cover;
 
-    background: -webkit-linear-gradient(to bottom, #0d0d1a 0%, #000000 100%);
-    background: -moz-linear-gradient(to bottom, #0d0d1a 0%, #000000 100%);
-    background: -ms-linear-gradient(to bottom, #0d0d1a 0%, #000000 100%);
-    background: -o-linear-gradient(to bottom, #0d0d1a 0%, #000000 100%);
-    background: linear-gradient(to bottom, #0d0d1a 0%, #000000 100%);
 }
+.p{
+    font-family: "Meriweather", serif;
+}
+.page{
+    min-height:100vh;
+}
+
 .signature{
     color:darkgray;
     text-align:right;
@@ -71,4 +116,33 @@ body{
 .stretch{
     background-color:darkslategrey;
     width:100%;
+}
+.title{
+    text-align: center;
+    font-family: 'EB Garamond', serif;
+}
+.white{
+    color:white;
+}
+.xs-centered{
+    width:90%;
+    max-width:800px;
+    margin: 0 auto;
+}
+
+
+#what {
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 0%,  rgba(10, 10 ,10, 1) 60%);
+}
+#why {
+
+}
+#how {
+
+}
+#where {
+
+}
+#who {
+
 }

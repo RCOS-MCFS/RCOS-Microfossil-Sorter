@@ -3,139 +3,222 @@
     <title>RCOS Microfossil Sorter</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link href="static/style.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Merriweather" rel="stylesheet">
 </head>
 
 <body>
-<div id="particles-js" style="z-index:-1;"></div>
-    <script src="static/js/particles.min.js"></script>
-    <script>
-        particlesJS({
-  "particles": {
-    "number": {
-      "value": 34,
-      "density": {
-        "enable": true,
-        "value_area": 800
-      }
-    },
-    "color": {
-      "value": "#878787"
-    },
-    "shape": {
-      "type": "circle",
-      "stroke": {
-        "width": 0,
-        "color": "#000000"
-      },
-      "polygon": {
-        "nb_sides": 5
-      },
-      "image": {
-        "src": "img/github.svg",
-        "width": 100,
-        "height": 100
-      }
-    },
-    "opacity": {
-      "value": 0.5,
-      "random": false,
-      "anim": {
-        "enable": false,
-        "speed": 1,
-        "opacity_min": 0.1,
-        "sync": false
-      }
-    },
-    "size": {
-      "value": 2,
-      "random": true,
-      "anim": {
-        "enable": false,
-        "speed": 40,
-        "size_min": 0.1,
-        "sync": false
-      }
-    },
-    "line_linked": {
-      "enable": true,
-      "distance": 64,
-      "color": "#ffffff",
-      "opacity": 0.4,
-      "width": 0
-    },
-    "move": {
-      "enable": true,
-      "speed": 6,
-      "direction": "bottom",
-      "random": false,
-      "straight": false,
-      "out_mode": "out",
-      "bounce": false,
-      "attract": {
-        "enable": true,
-        "rotateX": 600,
-        "rotateY": 1200
-      }
-    }
-  },
-  "interactivity": {
-    "detect_on": "canvas",
-    "events": {
-      "onhover": {
-        "enable": true,
-        "mode": "repulse"
-      },
-      "onclick": {
-        "enable": true,
-        "mode": "push"
-      },
-      "resize": true
-    },
-    "modes": {
-      "grab": {
-        "distance": 400,
+    <div id="particles-js" style="z-index:-1;"></div>
+        <script src="static/js/particles.min.js"></script>
+        <script>
+            particlesJS({
+      "particles": {
+        "number": {
+          "value": 34,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#686868"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          },
+          "image": {
+            "src": "img/github.svg",
+            "width": 100,
+            "height": 100
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 2,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
         "line_linked": {
-          "opacity": 1
+          "enable": true,
+          "distance": 64,
+          "color": "#858585",
+          "opacity": 0.4,
+          "width": 0
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "bottom",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": true,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
         }
       },
-      "bubble": {
-        "distance": 400,
-        "size": 40,
-        "duration": 2,
-        "opacity": 8,
-        "speed": 3
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
       },
-      "repulse": {
-        "distance": 200,
-        "duration": 0.4
-      },
-      "push": {
-        "particles_nb": 4
-      },
-      "remove": {
-        "particles_nb": 2
-      }
-    }
-  },
-  "retina_detect": false
-});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);
-    </script>
+      "retina_detect": false
+    });var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);
+        </script>
 
-<div class="landing">
-    <div class="background-image">
+    <div class="page" id="top">
+        <div class="background-image">
+        </div>
+        <h1 class="display-2 title">Microfossil Concentrate Sorter</h1>
+        <p class="lead">Olivia Lundelius and John Klingelhofer</p>
+        <a href="https://github.com/RCOS-MCFS/RCOS-Microfossil-Sorter" class="btn">View on GitHub</a>
+        <a href="blog.html" class="btn">Blog</a><br>
+        <div class="container reveal-container">
+            <div class="reveal">  <a href="#what"> What <span class="partial"> are microfossils?  </a> </span></div>
+            <div class="reveal">  <a href="#what"> Why <span class="partial"> are you sorting them? </span> </a> </div>
+            <div class="reveal">  <a href="#how"> How <span class="partial">  does it work? </span> </a> </div>
+            <div class="reveal">  <a href="#where"> Where <span class="partial"> are you in the project? </span> </a></div>
+            <div class="reveal">  <a href="#where"> Who <span class="partial"> is doing it? </span> </a></div>
+        </div>
     </div>
-    <h1 class="display-3">Microfossil Concentrate Sorter</h1>
-    <p class="lead">Olivia Lundelius and John Klingelhofer - RCOS Spring 2018</p>
-    <a href="https://github.com/RCOS-MCFS/RCOS-Microfossil-Sorter" class="btn">View on GitHub</a>
-    <a href="blog.html" class="btn">Blog</a>
-    <div class="reveal"> What <span class="partial"> are microfossils? </span></div>
-    <div class="reveal"> Why <span class="partial"> are you sorting them? </span></div>
-    <div class="reveal"> How <span class="partial"> does it work? </span></div>
-    <div class="reveal"> Where <span class="partial"> are you in the project? </span></div>
-</div>
+
+    <div class="page white" id="what">
+        <img class="img-background" src="static/img/scaled_microfossil.png" alt="One microfossil with penny for scale.">
+        <div class="container-fluid">
+            <h1 class="display-4 title"> What are microfossils? </h1>
+            <img class="img-center" src="static/img/microfossil.png" alt="Like a fossil, but micro.">
+            <div class="xs-centered">
+                <p style="font-family:'Merriweather', serif; font-size:20px;">
+                    Microfossils are bones (or bone fragments) 2-3 mm in size. They typically come from rodents,
+                    lizards, and other small vertebrates.  Microfossils are commonly found in areas of geological
+                    or paleontological interest, and are gathered from most excavation sites in order to provide
+                    more information to scientists about past environments.
+
+                    <br><br>
+
+                    They can come in a variety of colors, and infinite variety of shapes depending on their
+                    initial state and their natural environment.
+
+                    <br><br>
+
+                    When harvested, microfossils are in a blend of gravel and fossils called microfossil concentrate.
+
+                </p>
+            </div>
+            </div>
+        <div id="why">
+            <h1 class="display-4 title" style="padding-top:0;"> Why are you sorting them?</h1>
+                <div class="xs-centered">
+                    <p style="font-family:'Merriweather', serif; font-size:20px; padding-bottom:100px;">
+                        Due to the abundance of microfossils and the information that they can reveal about past flora,
+                        fauna and geological events, they are potentially an important source of big data in
+                        paleontology, geology, stratigraphy, and other branches of science.
+
+                        <br><br>
+
+                        Due to the quantity of microfossil concentrate collected from sites, sorting concentrate is an
+                        incredibly long and tedious process, so concentrate often goes for many years without being
+                        sorted.  Automating the sorting process would be very beneficial for paleontology, providing
+                        more complete data about locations studied and may lead to new research opportunities.
+                    </p>
+                </div>
+            </div>
+    </div>
+    <div class="page" id="how">
+        <div class="container-fluid">
+        <h1 class="display-4 title"> How does it work? </h1>
+        </div>
+
+    </div>
+    <div class="page" id="where">
+        <div class="container-fluid">
+        <h1 class="display-4 title"> Where are you in the project? </h1>
+        </div>
+
+    </div>
+    <div class="page" id="who">
+        <div class="container-fluid">
+        <h1 class="display-4 title"> Who is doing it? </h1>
+        </div>
+
+    </div>
 
 </body>
+
+<script>
+    $(document).ready(function () {
+        $("a[href*=\"#\"]").on('click', function (event) {
+            if (this.hash !== "") {
+                event.preventDefault();
+                var hash = this.hash;
+                $('html, body').animate({
+                    scrollTop: $(hash).offset().top
+                }, 1000, function () {
+                    (window.location).hash = hash;
+                });
+            } // End if
+        });
+    })
+</script>
+
 </html>
