@@ -4,7 +4,7 @@ import comp_vis.img_tools as it
 import cv2
 import numpy as np
 
-def live_labeling(model, camera_no=0):
+def live_labeling(model, camera_no=0, threshold_settings=(128, 1, 2)):
     '''
     One of the key functions used in the demo, this acts as a live demonstration of the
     utilty's capability for labeling, using the provided model to display classifiations on
@@ -35,7 +35,7 @@ def live_labeling(model, camera_no=0):
     while True:
         ret, frame = capture.read()
 
-        _, contour = it.get_largest_object(frame)
+        _, contour = it.get_largest_object(frame, threshhold_settings=threshold_settings)
         if contour is not None:
             # If object detected, label that object, outline it, and draw the label
             # over the outline.
@@ -69,21 +69,21 @@ def live_labeling(model, camera_no=0):
                         error_color,
                         line_type)
         cv2.imshow('frame', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(30) & 0xFF == ord('q'):
             break
 
     capture.release()
 
-def data_gathering(camera_no=0):
+def data_gathering(thresh_settings=(128, 1, 2), camera_num=0):
     '''
-    :param camera_no:
+    :param camera_num:
     :return: A tuple containing a list of gathered rock images, and a list of gathered bone images.
     '''
     # Variables used in output styling later on
     font = cv2.FONT_HERSHEY_SIMPLEX
     instruction_text = "'r' = rock - 'b' = Bone"
 
-    capture = cv2.VideoCapture(camera_no)
+    capture = cv2.VideoCapture(camera_num)
 
     # Numbers corresponding to various key presses.
     q = 113
@@ -105,7 +105,7 @@ def data_gathering(camera_no=0):
         # Take in the current frame of the video
         ret, frame = capture.read()
         # check for a clearly defined object in the current frame
-        thresh, contour = it.get_largest_object(frame)
+        thresh, contour = it.get_largest_object(frame, threshhold_settings=thresh_settings)
 
         # If a contour is found, we display it for use in debugging.
         if contour is not None:
@@ -117,7 +117,7 @@ def data_gathering(camera_no=0):
             cv2.putText(frame, 'Saved!', (10, 300), font, 1, (0, 255, 0), 0, cv2.LINE_AA)
         cv2.imshow('frame', frame)
         # cv2.imshow('threshhold', thresh)
-        key = cv2.waitKey(1)
+        key = cv2.waitKey(30)
 
         if key == q:
             break

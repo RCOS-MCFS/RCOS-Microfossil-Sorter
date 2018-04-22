@@ -20,7 +20,7 @@ def calibrate_thressholding(upper_limit=128, erode_iter=1, kernel_size=2):
     :return: A tuple containing (upper_limit, erode_iter, and kernel_size)
     '''
 
-    def nil():
+    def nil(_):
         '''
         This is a junk method used to satisfy the requirements of the create
         trackbar function.
@@ -35,16 +35,18 @@ def calibrate_thressholding(upper_limit=128, erode_iter=1, kernel_size=2):
     capture = cv2.VideoCapture(0)
 
     while(1):
-        _, img = capture.read()
-        img = threshhold(img, upper_limit, erode_iter, kernel_size)
-        cv2.imshow('image',img)
-        k = cv2.waitKey(1) & 0xFF
+        _, orig = capture.read()
+        img = threshhold(orig, upper_limit, erode_iter, kernel_size)
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
+        final = np.concatenate((orig, img), axis=1)
+        cv2.imshow('image',final)
+        k = cv2.waitKey(30) & 0xFF
         if k == 27:
             break
 
         # get current positions of four trackbars
         upper_limit = cv2.getTrackbarPos('upper limit','image')
-        iter = cv2.getTrackbarPos('erosion_lvl','image')
+        erode_iter = cv2.getTrackbarPos('erosion_lvl','image')
         kernel_size = cv2.getTrackbarPos('kernel size','image')
 
     cv2.destroyAllWindows()

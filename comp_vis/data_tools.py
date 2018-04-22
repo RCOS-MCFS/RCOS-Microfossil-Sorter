@@ -38,9 +38,9 @@ def images_to_data(images, label, already_cropped=True):
 def string_to_model(approach_name):
     '''
     :param approach_name: The string name of the model to be returned
-    :return: The model of type string.
+    :return: The model (subset of the Approach class) with a name matching approach_name
+    :raises ValueError: Raises if approach_name not recognized
     '''
-
     if approach_name == "perceptron":
         return Perceptron()
     elif approach_name == "multiclass":
