@@ -38,6 +38,7 @@ body{
 .container-fluid{
     max-width:1200px;
     padding-top:60px;
+    padding-bottom:60px;
 }
 .img-background{
     position:absolute;
@@ -86,6 +87,13 @@ body{
     -webkit-transition: opacity .3s;
     -moz-transition: opacity .3s;
 }
+.p{
+    font-family: "Meriweather", serif;
+    padding:0;
+}
+.page{
+    min-height:100vh;
+}
 .partial:hover{
     opacity:1;
 }
@@ -99,12 +107,6 @@ body{
     -o-background-size: cover;
     background-size: cover;
 
-}
-.p{
-    font-family: "Meriweather", serif;
-}
-.page{
-    min-height:100vh;
 }
 
 .signature{
@@ -132,12 +134,13 @@ body{
 
 
 #what {
-    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 0%,  rgba(10, 10 ,10, 1) 60%);
+    background: black;
 }
 #why {
 
 }
 #how {
+    background: radial-gradient(ellipse at center, rgb(197, 206, 222) 0%, rgb(156, 179, 189) 60%);
 
 }
 #where {

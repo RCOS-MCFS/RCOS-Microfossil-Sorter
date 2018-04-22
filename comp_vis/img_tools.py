@@ -126,7 +126,7 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True, min_contour_area = 1500, threshhold_settings=(128, 1, 2)):
+def get_largest_object(img, discount_out_of_bounds=True, min_contour_area = 750, threshhold_settings=(128, 1, 2)):
     '''
     :param img: An RGB OpenCV image.
     :param discount_out_of_bounds: If true, objects touching the edges of the image are ignored. This setting is
@@ -140,6 +140,8 @@ def get_largest_object(img, discount_out_of_bounds=True, min_contour_area = 1500
     upper_limit, erode_iter, kernel_size = threshhold_settings
     thresh = threshhold(img, upper_limit, erode_iter, kernel_size)
     im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+    x, y, _ = np.shape(img)
 
     def touches_edge(contour):
         '''

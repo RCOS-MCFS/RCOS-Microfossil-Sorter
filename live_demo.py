@@ -1,6 +1,7 @@
 # For live classification
 from approaches.approach import Multiclass_Logistic_Regression, Perceptron, Sklearn_SVM
 
+import comp_vis.calibration_tools as ct
 import comp_vis.data_tools as dt
 import comp_vis.img_tools as it
 import comp_vis.live_tools as lt
@@ -67,4 +68,6 @@ elif len(sys.argv) == 5:
 
     print("Accuracy on loaded data: " + str(model.assess_accuracy(testing_data)))
 
-lt.live_labeling(model, camera_no=camera_num)
+thresh_s = ct.calibrate_thressholding()
+
+lt.live_labeling(model, camera_no=camera_num, threshold_settings=thresh_s)
