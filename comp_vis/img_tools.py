@@ -126,7 +126,7 @@ def get_images_dimensions(images, normalized=False, ordered=False):
         ret_list.append((a, b))
     return ret_list
 
-def get_largest_object(img, discount_out_of_bounds=True, min_contour_area = 750, threshhold_settings=(128, 1, 2)):
+def get_largest_object(img, discount_out_of_bounds=True, min_contour_area = 750, threshhold_settings=(0, 128, 1, 2)):
     '''
     :param img: An RGB OpenCV image.
     :param discount_out_of_bounds: If true, objects touching the edges of the image are ignored. This setting is
@@ -137,8 +137,8 @@ def get_largest_object(img, discount_out_of_bounds=True, min_contour_area = 750,
     :param threshhold_settings: A tuple containing upper_limit, erode_iter, and kernel_size to be used in thressholding.
     :return:
     '''
-    upper_limit, erode_iter, kernel_size = threshhold_settings
-    thresh = threshhold(img, upper_limit, erode_iter, kernel_size)
+    lower_limit, upper_limit, erode_iter, kernel_size = threshhold_settings
+    thresh = threshhold(img, lower_limit, upper_limit, erode_iter, kernel_size)
     im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     x, y, _ = np.shape(img)
@@ -212,7 +212,7 @@ def save_images(images, path):
     print("Images saved successfully.")
 
 
-def threshhold(img, upper_limit, iter, kernel_size):
+def threshhold(img, lower_limit, upper_limit, iter, kernel_size):
     '''
     Given an image and parameters, returns the binary thresshold of that image. In the context of this project,
     when given proper parameters, the white part of the returned threshhold will the the rock or bone in the image,
@@ -227,9 +227,17 @@ def threshhold(img, upper_limit, iter, kernel_size):
                         key details. 2 is a common value.
     :return: OpenCV binary image.
     '''
-    y, x, _ = np.shape(img)
-    # Convert to greyscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    y, x = np.shape(img)[0:2]
+    # Convert to greyscale if not already
+    if len(np.shape(img)) == 3:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = img
+
+    # Apply the lower limit, it's not baked into the opencv thresshold, but can be
+    # useful. Anything below this level is supplanted by a 0, whilst anything
+    # higher than the upper is 255. Useful for some imperfect backgrounds.
+    gray[gray <= lower_limit] = 0
     ret, thresh = cv2.threshold(gray, upper_limit, 255, cv2.THRESH_BINARY)
     kernel = np.ones((kernel_size, kernel_size), np.uint8)
     erosion = cv2.erode(thresh, kernel, iterations=iter)
