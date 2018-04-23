@@ -148,7 +148,7 @@
             <h1 class="display-4 title"> What are microfossils? </h1>
             <img class="img-center" src="static/img/microfossil.png" alt="Like a fossil, but micro.">
             <div class="xs-centered">
-                <p style="font-family:'Merriweather', serif; font-size:20px;">
+                <p class="formal">
                     Microfossils are bones (or bone fragments) 2-3 mm in size. They typically come from rodents,
                     lizards, and other small vertebrates.  Microfossils are commonly found in areas of geological
                     or paleontological interest, and are gathered from most excavation sites in order to provide
@@ -168,7 +168,7 @@
             <div id="why">
                 <h1 class="display-4 title" style="padding-top:0;"> Why are you sorting them?</h1>
                     <div class="xs-centered">
-                        <p style="font-family:'Merriweather', serif; font-size:20px;">
+                        <p class="formal">
                             Due to the abundance of microfossils and the information that they can reveal about past flora,
                             fauna and geological events, they are potentially an important source of big data in
                             paleontology, geology, stratigraphy, and other branches of science.
@@ -187,6 +187,61 @@
     <div class="page" id="how">
         <div class="container-fluid">
         <h1 class="display-4 title"> How are they sorted? </h1>
+            <div class="xs-centered">
+                <p>
+                    Due to the innumerable shapes and sizes of these fossils, many traditional computer vision
+                    techniques which are more based around recognizing certain shapes or patterns in objects are
+                    impractical. With this restriction, we the difference in color and general shape as the primary
+                    discriminator. Prior to sorting, the model is trained by:
+                </p>
+            </div>
+            <div class="steps">
+
+              <input id="tab1" type="radio" name="tabs" checked>
+              <label for="tab1">Calibration</label>
+
+              <input id="tab2" type="radio" name="tabs">
+              <label for="tab2"> Generation </label>
+
+              <input id="tab3" type="radio" name="tabs">
+              <label for="tab3"> Training </label>
+
+              <input id="tab4" type="radio" name="tabs">
+              <label for="tab4"> Training </label>
+
+              <section id="content1">
+                <p>
+                  Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket meatloaf short ribs.
+                </p>
+                <p>
+                  Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin meatloaf swine ground round venison.
+                </p>
+              </section>
+
+              <section id="content2">
+                <p>
+                  Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
+                </p>
+                <p>
+                  Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
+                </p>
+              </section>
+
+              <section id="content3">
+                <p>
+                  Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket meatloaf short ribs.
+                </p>
+                <p>
+                  Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin meatloaf swine ground round venison.
+                </p>
+              </section>
+              <section id="content4">
+                <div class="row">
+                    <img class='gif-center' src="static/img/demo.gif">
+                </div>
+              </section>
+
+            </div>
         </div>
 
     </div>
