@@ -135,7 +135,7 @@
         <a href="blog.html" class="btn">Blog</a><br>
         <div class="container reveal-container">
             <div class="reveal">  <a href="#what"> What <span class="partial"> are microfossils?  </a> </span></div>
-            <div class="reveal">  <a href="#what"> Why <span class="partial"> are you sorting them? </span> </a> </div>
+            <div class="reveal">  <a href="#why"> Why <span class="partial"> are you sorting them? </span> </a> </div>
             <div class="reveal">  <a href="#how"> How <span class="partial">  are they sorted? </span> </a> </div>
             <div class="reveal">  <a href="#where"> Where <span class="partial"> are you in the project? </span> </a></div>
             <div class="reveal">  <a href="#where"> Who <span class="partial"> is doing it? </span> </a></div>
@@ -191,14 +191,16 @@
                 <p>
                     Due to the innumerable shapes and sizes of these fossils, many traditional computer vision
                     techniques which are more based around recognizing certain shapes or patterns in objects are
-                    impractical. With this restriction, we the difference in color and general shape as the primary
-                    discriminator. Prior to sorting, the model is trained by:
+                    not valid options. Instead, we use color averages within detected edges, as well as some general
+                    features of this edge, as the discriminating values. While we have had success with this method,
+                    it does require the retraining of models when shifting to concentrate from a new location with
+                    different average colors. The steps from training to application are detailed below.
                 </p>
             </div>
-            <div class="steps">
+            <div class="steps" style="min-height:500px;">
 
               <input id="tab1" type="radio" name="tabs" checked>
-              <label for="tab1">Calibration</label>
+              <label for="tab1"> Calibration</label>
 
               <input id="tab2" type="radio" name="tabs">
               <label for="tab2"> Generation </label>
@@ -207,37 +209,43 @@
               <label for="tab3"> Training </label>
 
               <input id="tab4" type="radio" name="tabs">
-              <label for="tab4"> Training </label>
+              <label for="tab4"> Application </label>
 
               <section id="content1">
-                <p>
-                  Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket meatloaf short ribs.
-                </p>
-                <p>
-                  Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin meatloaf swine ground round venison.
-                </p>
+                    <img class="img-center adaptive" src="static/img/threshhold.png">
+                  <p>
+                      First in generating a new model, the user will need to adjust the sliders for the four
+                      parameters which determine the thresholding in order to assert that the best possible
+                      edge is being chosen.
+                  </p>
               </section>
 
               <section id="content2">
-                <p>
-                  Bacon ipsum dolor sit amet landjaeger sausage brisket, jerky drumstick fatback boudin ball tip turducken. Pork belly meatball t-bone bresaola tail filet mignon kevin turkey ribeye shank flank doner cow kielbasa shankle. Pig swine chicken hamburger, tenderloin turkey rump ball tip sirloin frankfurter meatloaf boudin brisket ham hock. Hamburger venison brisket tri-tip andouille pork belly ball tip short ribs biltong meatball chuck. Pork chop ribeye tail short ribs, beef hamburger meatball kielbasa rump corned beef porchetta landjaeger flank. Doner rump frankfurter meatball meatloaf, cow kevin pork pork loin venison fatback spare ribs salami beef ribs.
-                </p>
-                <p>
-                  Jerky jowl pork chop tongue, kielbasa shank venison. Capicola shank pig ribeye leberkas filet mignon brisket beef kevin tenderloin porchetta. Capicola fatback venison shank kielbasa, drumstick ribeye landjaeger beef kevin tail meatball pastrami prosciutto pancetta. Tail kevin spare ribs ground round ham ham hock brisket shoulder. Corned beef tri-tip leberkas flank sausage ham hock filet mignon beef ribs pancetta turkey.
-                </p>
+                    <img class="img-center adaptive" src="static/img/trainer.png">
+                  <p>
+                      With our edge parameters set, the user then takes manually labels the contents of the edges
+                      detected as rock or bone, with the r and b keys. The exact number required for best results
+                      has not yet been determined.
+                  </p>
               </section>
 
               <section id="content3">
                 <p>
-                  Bacon ipsum dolor sit amet beef venison beef ribs kielbasa. Sausage pig leberkas, t-bone sirloin shoulder bresaola. Frankfurter rump porchetta ham. Pork belly prosciutto brisket meatloaf short ribs.
-                </p>
-                <p>
-                  Brisket meatball turkey short loin boudin leberkas meatloaf chuck andouille pork loin pastrami spare ribs pancetta rump. Frankfurter corned beef beef tenderloin short loin meatloaf swine ground round venison.
+                    With the labeled images set, the SVM is then trained on a portion of this data. Once training is
+                    complete, the accuracy on the remainder of the data is reported, and the model is saved.
+                    <br><br><br><br>
                 </p>
               </section>
               <section id="content4">
                 <div class="row">
-                    <img class='gif-center' src="static/img/demo.gif">
+                    <img class='img-center adaptive' src="static/img/demo.gif">
+                    <p>
+                        Using either a freshly generated or previously saved model, the software begins live
+                        classifying elements from the concentrate as they pass infront of the lens. While the hardware
+                        component of this project is still in development, it would direct the a servo motor
+                        at this point to deposit the sample into one of two containers, and catalog the numbers
+                        classified.
+                    </p>
                 </div>
               </section>
 
@@ -248,16 +256,42 @@
     <div class="page" id="where">
         <div class="container-fluid">
         <h1 class="display-4 title"> Where are you in the project? </h1>
+            <div class="xs-centered">
+                <p>
+                    At the moment, the software is largely complete. We are of course always keeping our ears open
+                    to new methods and ways in which we can improve this project, but presently all that remains
+                    is improving the UI for all tools so that it is as approachable as possible to members of the
+                    paleontology community who don't want to use command line utilities existing currently.
+
+                    While the current software runs admirably even on the extremely underpowered laptop used for most
+                    testing, our target platform is a Raspberry Pi, so it may be refined for greater optimization
+                    depending on the demands and capabilities of this final platform.
+                </p>
+                <p>
+                    The hardware is still early in its development, though a prototype is expected to be completed by
+                    the end of the semester.
+                </p>
+            </div>
+
+            <div id="who">
+                <div class="container-fluid">
+                <h1 class="display-4 title"> Who is doing it? </h1>
+                <div class="xs-centered">
+                        <p class="formal sem-details">
+                        <br>
+                        <span class="sem"> Spring 2018 </span> Olivia Lundelius and John Klingelhofer
+                        </p>
+                </div>
+                </div>
+            </div>
         </div>
-
-    </div>
-    <div class="page" id="who">
-        <div class="container-fluid">
-        <h1 class="display-4 title"> Who is doing it? </h1>
-        </div>
-
     </div>
 
+<footer>
+    This project is a part of the <a href="https://rcos.io"> <span class="sem"> Rensselaer Center for Open Source<br>
+    <a href="https://github.com/RCOS-MCFS/RCOS-Microfossil-Sorter"> Github </a> | <a href="blog.html"> Blog </a> | <a href="mailto:klingj3@rpi.edu"> Contact </a>
+    </span> </a>
+</footer>
 </body>
 
 <script>

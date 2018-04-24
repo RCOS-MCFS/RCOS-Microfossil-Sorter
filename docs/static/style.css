@@ -31,14 +31,11 @@ body{
     margin-left: auto;
     margin-right: auto;
 }
-.gif-center{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width:400px;
-    height:400px;
-    object-fit: cover;
-    border-radius: 10px;
+.img-center.adaptive{
+    height:40%;
+    min-height:300px;
+    margin-bottom:10px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
 }
 .container{
     margin-top:0px;
@@ -48,6 +45,12 @@ body{
     max-width:1200px;
     padding-top:60px;
     padding-bottom:60px;
+}
+footer{
+    text-align:center;
+    font-size:12px;
+    margin-top:20px;
+    margin-bottom:20px;
 }
 .img-background{
     position:absolute;
@@ -167,8 +170,9 @@ p{
 
 section {
   display: none;
-  padding: 20px 0 0;
+  padding: 20px;
   border-top: 1px solid #ddd;
+  transition: all .5s;
 }
 
 input {
@@ -209,6 +213,13 @@ input:checked + label {
 #tab4:checked ~ #content4 {
   display: block;
 }
+.sem-details{
+    margin-left:20%;
+}
+.sem{
+    color:darkred;
+    font-weight:900;
+}
 
 #what {
     background: black;
@@ -220,8 +231,8 @@ input:checked + label {
 
 }
 #where {
-background: radial-gradient(ellipse at center, rgb(197, 206, 222) 0%, rgb(156, 179, 189) 60%);
-
+background: radial-gradient(ellipse at bottom, #c9c7d7 0%, #aeacbc 60%);
+min-height:95vh !important;
 }
 #who {
 
