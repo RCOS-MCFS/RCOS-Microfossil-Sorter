@@ -31,6 +31,12 @@ body{
     margin-left: auto;
     margin-right: auto;
 }
+.img-center.adaptive{
+    height:40%;
+    min-height:300px;
+    margin-bottom:10px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+}
 .container{
     margin-top:0px;
     max-width:1200px;
@@ -40,10 +46,20 @@ body{
     padding-top:60px;
     padding-bottom:60px;
 }
+footer{
+    text-align:center;
+    font-size:12px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
 .img-background{
     position:absolute;
     max-width:100%;
     right:0;
+}
+.img-rounded{
+    border-radius: 5px;
+    position: float;
 }
 .jumbotron{
     color:black;
@@ -87,9 +103,13 @@ body{
     -webkit-transition: opacity .3s;
     -moz-transition: opacity .3s;
 }
-.p{
-    font-family: "Meriweather", serif;
-    padding:0;
+p{
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+    font-size:20px;
+}
+.formal {
+    font-family:'Merriweather', serif; font-size:20px;
 }
 .page{
     min-height:100vh;
@@ -133,6 +153,74 @@ body{
 }
 
 
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.steps {
+  min-width: 320px;
+  max-width: 800px;
+  padding: 50px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+section {
+  display: none;
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  transition: all .5s;
+}
+
+input {
+  display: none;
+}
+
+label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #bbb;
+  border: 1px solid transparent;
+}
+
+label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+label:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+input:checked + label {
+  color: #555;
+  border: 1px solid #ddd;
+  border-top: 2px solid lightblue;
+  border-bottom: 1px solid #fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4 {
+  display: block;
+}
+.sem-details{
+    margin-left:20%;
+}
+.sem{
+    color:darkred;
+    font-weight:900;
+}
+
 #what {
     background: black;
 }
@@ -140,11 +228,11 @@ body{
 
 }
 #how {
-    background: radial-gradient(ellipse at center, rgb(197, 206, 222) 0%, rgb(156, 179, 189) 60%);
 
 }
 #where {
-
+background: radial-gradient(ellipse at bottom, #c9c7d7 0%, #aeacbc 60%);
+min-height:95vh !important;
 }
 #who {
 

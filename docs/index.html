@@ -135,7 +135,7 @@
         <a href="blog.html" class="btn">Blog</a><br>
         <div class="container reveal-container">
             <div class="reveal">  <a href="#what"> What <span class="partial"> are microfossils?  </a> </span></div>
-            <div class="reveal">  <a href="#what"> Why <span class="partial"> are you sorting them? </span> </a> </div>
+            <div class="reveal">  <a href="#why"> Why <span class="partial"> are you sorting them? </span> </a> </div>
             <div class="reveal">  <a href="#how"> How <span class="partial">  are they sorted? </span> </a> </div>
             <div class="reveal">  <a href="#where"> Where <span class="partial"> are you in the project? </span> </a></div>
             <div class="reveal">  <a href="#where"> Who <span class="partial"> is doing it? </span> </a></div>
@@ -148,7 +148,7 @@
             <h1 class="display-4 title"> What are microfossils? </h1>
             <img class="img-center" src="static/img/microfossil.png" alt="Like a fossil, but micro.">
             <div class="xs-centered">
-                <p style="font-family:'Merriweather', serif; font-size:20px;">
+                <p class="formal">
                     Microfossils are bones (or bone fragments) 2-3 mm in size. They typically come from rodents,
                     lizards, and other small vertebrates.  Microfossils are commonly found in areas of geological
                     or paleontological interest, and are gathered from most excavation sites in order to provide
@@ -168,7 +168,7 @@
             <div id="why">
                 <h1 class="display-4 title" style="padding-top:0;"> Why are you sorting them?</h1>
                     <div class="xs-centered">
-                        <p style="font-family:'Merriweather', serif; font-size:20px;">
+                        <p class="formal">
                             Due to the abundance of microfossils and the information that they can reveal about past flora,
                             fauna and geological events, they are potentially an important source of big data in
                             paleontology, geology, stratigraphy, and other branches of science.
@@ -187,22 +187,111 @@
     <div class="page" id="how">
         <div class="container-fluid">
         <h1 class="display-4 title"> How are they sorted? </h1>
+            <div class="xs-centered">
+                <p>
+                    Due to the innumerable shapes and sizes of these fossils, many traditional computer vision
+                    techniques which are more based around recognizing certain shapes or patterns in objects are
+                    not valid options. Instead, we use color averages within detected edges, as well as some general
+                    features of this edge, as the discriminating values. While we have had success with this method,
+                    it does require the retraining of models when shifting to concentrate from a new location with
+                    different average colors. The steps from training to application are detailed below.
+                </p>
+            </div>
+            <div class="steps" style="min-height:500px;">
+
+              <input id="tab1" type="radio" name="tabs" checked>
+              <label for="tab1"> Calibration</label>
+
+              <input id="tab2" type="radio" name="tabs">
+              <label for="tab2"> Generation </label>
+
+              <input id="tab3" type="radio" name="tabs">
+              <label for="tab3"> Training </label>
+
+              <input id="tab4" type="radio" name="tabs">
+              <label for="tab4"> Application </label>
+
+              <section id="content1">
+                    <img class="img-center adaptive" src="static/img/threshhold.png">
+                  <p>
+                      First in generating a new model, the user will need to adjust the sliders for the four
+                      parameters which determine the thresholding in order to assert that the best possible
+                      edge is being chosen.
+                  </p>
+              </section>
+
+              <section id="content2">
+                    <img class="img-center adaptive" src="static/img/trainer.png">
+                  <p>
+                      With our edge parameters set, the user then takes manually labels the contents of the edges
+                      detected as rock or bone, with the r and b keys. The exact number required for best results
+                      has not yet been determined.
+                  </p>
+              </section>
+
+              <section id="content3">
+                <p>
+                    With the labeled images set, the SVM is then trained on a portion of this data. Once training is
+                    complete, the accuracy on the remainder of the data is reported, and the model is saved.
+                    <br><br><br><br>
+                </p>
+              </section>
+              <section id="content4">
+                <div class="row">
+                    <img class='img-center adaptive' src="static/img/demo.gif">
+                    <p>
+                        Using either a freshly generated or previously saved model, the software begins live
+                        classifying elements from the concentrate as they pass infront of the lens. While the hardware
+                        component of this project is still in development, it would direct the a servo motor
+                        at this point to deposit the sample into one of two containers, and catalog the numbers
+                        classified.
+                    </p>
+                </div>
+              </section>
+
+            </div>
         </div>
 
     </div>
     <div class="page" id="where">
         <div class="container-fluid">
         <h1 class="display-4 title"> Where are you in the project? </h1>
+            <div class="xs-centered">
+                <p>
+                    At the moment, the software is largely complete. We are of course always keeping our ears open
+                    to new methods and ways in which we can improve this project, but presently all that remains
+                    is improving the UI for all tools so that it is as approachable as possible to members of the
+                    paleontology community who don't want to use command line utilities existing currently.
+
+                    While the current software runs admirably even on the extremely underpowered laptop used for most
+                    testing, our target platform is a Raspberry Pi, so it may be refined for greater optimization
+                    depending on the demands and capabilities of this final platform.
+                </p>
+                <p>
+                    The hardware is still early in its development, though a prototype is expected to be completed by
+                    the end of the semester.
+                </p>
+            </div>
+
+            <div id="who">
+                <div class="container-fluid">
+                <h1 class="display-4 title"> Who is doing it? </h1>
+                <div class="xs-centered">
+                        <p class="formal sem-details">
+                        <br>
+                        <span class="sem"> Spring 2018 </span> Olivia Lundelius and John Klingelhofer
+                        </p>
+                </div>
+                </div>
+            </div>
         </div>
-
-    </div>
-    <div class="page" id="who">
-        <div class="container-fluid">
-        <h1 class="display-4 title"> Who is doing it? </h1>
-        </div>
-
     </div>
 
+<footer>
+    This project is a part of the <a href="https://rcos.io"> <span class="sem"> Rensselaer Center for Open Source<br>
+    <a href="https://github.com/RCOS-MCFS/RCOS-Microfossil-Sorter"> Github </a> | <a href="blog.html"> Blog </a> | <a href="mailto:klingj3@rpi.edu"> Contact </a>
+    </span> </a>
+</footer>
 </body>
 
 <script>
