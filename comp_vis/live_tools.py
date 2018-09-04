@@ -74,7 +74,7 @@ def live_labeling(model, camera_no=0, threshold_settings=(128, 1, 2)):
 
     capture.release()
 
-def data_gathering(thresh_settings=(128, 1, 2), camera_num=0):
+def data_gathering(thresh_settings=(0, 128, 1, 2), camera_num=0):
     '''
     :param camera_num:
     :return: A tuple containing a list of gathered rock images, and a list of gathered bone images.
