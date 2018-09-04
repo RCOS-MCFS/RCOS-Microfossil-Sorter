@@ -1,0 +1,239 @@
+a:link{
+    color:inherit;
+    text-decoration:inherit;
+}
+a:visited{
+    color:inherit;
+    text-decoration:inherit;
+}
+body{
+}
+.blog-entry{
+    padding:20px;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: black;
+    background-color: rgba(255,255,255,0.08);
+    border-color: rgba(0,0,0,0.2);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.3rem;
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+}
+.btn:hover {
+    background-color: rgba(255,255,255,0.8);
+
+}
+.img-center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.img-center.adaptive{
+    height:40%;
+    min-height:300px;
+    margin-bottom:10px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+}
+.container{
+    margin-top:0px;
+    max-width:1200px;
+}
+.container-fluid{
+    max-width:1200px;
+    padding-top:60px;
+    padding-bottom:60px;
+}
+footer{
+    text-align:center;
+    font-size:12px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.img-background{
+    position:absolute;
+    max-width:100%;
+    right:0;
+}
+.img-rounded{
+    border-radius: 5px;
+    position: float;
+}
+.jumbotron{
+    color:black;
+    background-image: url("img/edge2.png");
+    text-align: center;
+    margin-bottom:0px;
+}
+
+#top{
+    padding-top:30vh;
+
+
+    background: -webkit-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: -moz-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: -ms-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: -o-linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(200, 200, 200, 1) 80%);
+
+    text-align:center;
+    color:black;
+}
+.overview{
+    padding:20px;
+    color:black;
+}
+.reveal{
+    text-align:left;
+    font-family:"EB Garamond";
+    font-size:30px;
+}
+.reveal-container{
+    margin: 0 auto;
+    left:100px;
+    width:600px;
+}
+.partial{
+    opacity:0.2;
+    padding-left:70px;
+    position:relative;
+    left:-70px;
+    -webkit-transition: opacity .3s;
+    -moz-transition: opacity .3s;
+}
+p{
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+    font-size:20px;
+}
+.formal {
+    font-family:'Merriweather', serif; font-size:20px;
+}
+.page{
+    min-height:100vh;
+}
+.partial:hover{
+    opacity:1;
+}
+#particles-js{
+    position:fixed;
+    width:100%;
+    height:100%;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+.signature{
+    color:darkgray;
+    text-align:right;
+    width:100%;
+    font-style: italic;
+}
+.stretch{
+    background-color:darkslategrey;
+    width:100%;
+}
+.title{
+    text-align: center;
+    font-family: 'EB Garamond', serif;
+}
+.white{
+    color:white;
+}
+.xs-centered{
+    width:90%;
+    max-width:800px;
+    margin: 0 auto;
+}
+
+
+
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.steps {
+  min-width: 320px;
+  max-width: 800px;
+  padding: 50px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+section {
+  display: none;
+  padding: 20px;
+  border-top: 1px solid #ddd;
+  transition: all .5s;
+}
+
+input {
+  display: none;
+}
+
+label {
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 15px 25px;
+  font-weight: 600;
+  text-align: center;
+  color: #bbb;
+  border: 1px solid transparent;
+}
+
+label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+label:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+input:checked + label {
+  color: #555;
+  border: 1px solid #ddd;
+  border-top: 2px solid lightblue;
+  border-bottom: 1px solid #fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4 {
+  display: block;
+}
+.sem-details{
+    margin-left:20%;
+}
+.sem{
+    color:darkred;
+    font-weight:900;
+}
+
+#what {
+    background: black;
+}
+#why {
+
+}
+#how {
+
+}
+#where {
+background: radial-gradient(ellipse at bottom, #c9c7d7 0%, #aeacbc 60%);
+min-height:95vh !important;
+}
+#who {
+
+}
