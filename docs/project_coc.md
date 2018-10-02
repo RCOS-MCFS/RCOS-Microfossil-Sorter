@@ -1,8 +1,8 @@
 # Microfossil Concentrate Sorter -  Code of Conduct
-In the interest of fostering an open and welcoming environment, [your project] pledges to be an inclusive and harassment-free experience for  all, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, educational background, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation. 
+In the interest of fostering an open and welcoming environment, MCFS pledges to be an inclusive and harassment-free experience for  all, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, educational background, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation. 
 
 ## General
-The General Code of Conduct applies to all MCS-affiliated activity online and offline.
+The General Code of Conduct applies to all MCFS-affiliated activity online and offline.
 
 ### Guidelines
 #### Be respectful and inclusive

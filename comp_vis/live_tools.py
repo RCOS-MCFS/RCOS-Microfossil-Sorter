@@ -7,7 +7,7 @@ import numpy as np
 def live_labeling(model, camera_no=0, threshold_settings=(128, 1, 2)):
     '''
     One of the key functions used in the demo, this acts as a live demonstration of the
-    utilty's capability for labeling, using the provided model to display classifiations on
+    utility's capability for labeling, using the provided model to display classifications on
     objects passing in front of the camera.
 
     TODO: Redo contouring, have set of contour parameters be as argument, increase range of usable lighting envts.

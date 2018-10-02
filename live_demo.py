@@ -21,7 +21,8 @@ if len(sys.argv) < 3 or len(sys.argv) > 5:
                      "live_demo.py perceptron [camera_num] [location to previous weights]")
     exit()
 
-# The first command line argument describes the ML approach to be used.
+# The first command line argument describes the ML approach to be used (ex: perceptron)
+# The second argument (int) specifies which camera to use.
 
 approach_name = sys.argv[1]
 camera_num = int(sys.argv[2])
