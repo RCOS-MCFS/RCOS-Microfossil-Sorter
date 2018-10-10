@@ -1,26 +1,25 @@
-Program Purpose: Sort microfossils from gravel using color values, using a trained Sklearn_SVM machine learning package in python. 
+Program Purpose: Sort microfossils from gravel using color values, using a trained Sklearn_SVM machine learning package in python, and outline the fossils with a contour. 
 
 
 Technologies: Sklearn_SVM, tested on Windows 10, PyCharm
 
 
 live_demo:
-runs the sorter program by intialing the camera uses trained machine learning package to sort samples. There are 2 options to run this program, one 
-with the capiblity of training while running, and using strcitly a pre trained machine learning apporach. 
+runs the sorter program by initialing the camera uses trained machine learning package to sort samples. There are 2 options to run this program, one 
+with the capability of training while running, and using strictly a pre trained machine learning approach. 
 
 
 To run on terminal:
-\live_demo.py [machine learning apporach] [camera_number] [bones photos folder path] [path to gravel photos]
+\live_demo.py [machine learning approach] [camera_number] [bones photos folder path] [path to gravel photos]
 
-\live_demo.py  [machine learning apporach] [camera_number] [weight file]
+\live_demo.py  [machine learning approach] [camera_number] [weight file]
 *note: weight file for pre trained machine learning
 
-*note: camera number default is commonly 0 and all directory path in the paramters need to be absolute.
+*note: camera number default is commonly 0 and all directory path in the parameters need to be absolute.
 
 To run in PyCharm IDE:
 After cloning the Microfossil sorter, and opening directory in PyCharm,
-go to live_demo program configerations with the paramaters.
-
+go to live_demo program configurations with the parameters.
 
 
 
