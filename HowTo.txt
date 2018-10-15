@@ -23,5 +23,3 @@ go to live_demo program configurations with the parameters.
 
 
 
-ss
-
