@@ -1,13 +1,33 @@
 Program Purpose: Sort microfossils from gravel using color values, using a trained Sklearn_SVM machine learning package in python, and outline the fossils with a contour. 
 
+Technologies: Sklearn_SVM, tested on Windows 10, PyCharm 2018.2.3, Python 3.6
 
-Technologies: Sklearn_SVM, tested on Windows 10, PyCharm
+Before the program is ran, the user must install the following packages.
 
+Packages needed:
+
+
+numpy,
+opencv-python, 
+pip, 
+progressbar2, 
+python-utils, 
+scipy,
+*scikit-learn, 
+setuptools,
+six
+
+*Scipy must be installed first for scikit-learned to be installed 
+**It is highly recommended that an Python IDE is used because they have few problems with installing differnet packages.
 
 live_demo:
 runs the sorter program by initialing the camera uses trained machine learning package to sort samples. There are 2 options to run this program, one 
 with the capability of training while running, and using strictly a pre trained machine learning approach. 
 
+
+live_demo:
+runs the sorter program by initialing the camera uses trained machine learning package to sort samples. There are 2 options to run this program, one 
+with the capability of training while running, and using strictly a pre trained machine learning approach. 
 
 To run on terminal:
 \live_demo.py [machine learning approach] [camera_number] [bones photos folder path] [path to gravel photos]
@@ -17,9 +37,26 @@ To run on terminal:
 
 *note: camera number default is commonly 0 and all directory path in the parameters need to be absolute.
 
+example: C:\Users\name\folder\path\image_folder\image
+
+
 To run in PyCharm IDE:
 After cloning the Microfossil sorter, and opening directory in PyCharm,
 go to live_demo program configurations with the parameters.
+
+
+Once running the program should open a window, with a live video of the objects in front of the selected camera.
+Above there will be slider that allow the user to change the lower and upper limits, erosion level, and kernel size.
+
+lower and upper limits: Changes the pixel shading levels. If you increase the lower and Upper bounds the live images'
+color can be darken.
+
+erosion level: Changes the pixel size of all images in the live feed congurently.Lowering the level allows more pixel detail.
+
+kernel size: Increase the pixel size of the live image.Lowering the size allows more pixel detail.
+
+When the machine learning detects a bone, the object will be outlined in a green contour along with a label saying bone.
+Else when it dectects a rock, it will be labeled as rock and be contoured by blue.
 
 
 
