@@ -1,0 +1,22 @@
+IMAGES_TO_DATA "2018-11-4-18" "V1.0"
+
+
+NAME
+images_to_data
+
+
+SYNOPSIS
+
+images_to_data(images, label, already_cropped=True)
+
+
+DESCRIPTION
+
+.Return: array of data.
+
+
+OPTIONS
+
+:param images: A list of OpenCV images
+:param already_cropped: if these images have already been cropped. If not, they will be.
+:param label: An integer label for the data.

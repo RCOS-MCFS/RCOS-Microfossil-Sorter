@@ -1,0 +1,22 @@
+DATA_GATHERING "2018-11-4-18" "V1.0" 
+
+NAME
+data_gathering
+
+
+SYNOPSIS
+
+data_gathering(thres_settings=(0,128, 1, 2), camera_num=0)
+
+
+DESCRIPTION
+
+Gathers data by taking cropped images of bone and fossil and registering user then inputs the corresponing keys b, for bone, or r for rock.
+The inputs are then saved into the rock and bone lists, and returned. The returned values are ment to be used for the machine learning method
+
+
+OPTIONS
+
+:param camera_no
+  The number of the webcam to be used. Typically 0 on the raspberry pi, but often 1 if you're using a USB webcam on a computer with a webcam.
+ 
