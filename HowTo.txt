@@ -35,9 +35,11 @@ To run on terminal:
 \live_demo.py  [machine learning approach] [camera_number] [weight file]
 *note: weight file for pre trained machine learning
 
-*note: camera number default is commonly 0 and all directory path in the parameters need to be absolute.
-
+**note: camera number default is commonly 0 and all directory path in the parameters need to be absolute.
 example: C:\Users\name\folder\path\image_folder\image
+
+**
+The machine learning approaches are sklearn and  perceptron(best to use)
 
 
 To run in PyCharm IDE:
