@@ -58,4 +58,4 @@ erosion level: Changes the pixel size of all images in the live feed congurently
 kernel size: Increase the pixel size of the live image.Lowering the size allows more pixel detail.
 
 When the machine learning detects a bone, the object will be outlined in a green contour along with a label saying bone.
-Else when it dectects a rock, it will be labeled as rock and be contoured by blue.
+Else when it dectects a rock, it will be labeled as rock and be contoured by red. Other objects will be contoured with blue.
