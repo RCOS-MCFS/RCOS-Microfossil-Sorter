@@ -1,0 +1,24 @@
+CLASSIFY_DATUM "2018-11-4-18" "V1.0"
+
+
+NAME
+classify_datum
+
+
+SYNOPSIS
+
+classify_datum(self, weights, row, act_type='linear')
+
+
+DESCRIPTION
+Sum all the enumerated values in given row with the value of weight[i] corresponding to 
+a row into a variable, activation.Uses a function called linear in return to classify as either 1 or 0.
+
+.Return: 1.00 or 0.00
+
+
+OPTIONS
+
+:param: Matrix of data weights
+:param: a row
+:param: act_type, default='linear' 
