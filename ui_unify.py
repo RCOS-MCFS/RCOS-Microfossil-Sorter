@@ -7,7 +7,7 @@ from PySide2.QtCore import *
 qt_app = QApplication(sys.argv)
 
 
-class HelloWorldApp(QLabel):
+class UI_Unify(QLabel):
 
 
     def __init__(self):
@@ -129,7 +129,7 @@ class HelloWorldApp(QLabel):
 
 
 # Create an instance of the application and run it
-HelloWorldApp().run()
+UI_Unify().run()
 
 
 
