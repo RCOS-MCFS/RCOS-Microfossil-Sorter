@@ -3,6 +3,7 @@
 import comp_vis.img_tools as it
 import cv2
 import numpy as np
+import sys
 
 def live_labeling(model, camera_no=0, threshold_settings=(128, 1, 2)):
     '''
@@ -74,6 +75,7 @@ def live_labeling(model, camera_no=0, threshold_settings=(128, 1, 2)):
 
     capture.release()
 
+
 def data_gathering(thresh_settings=(0, 128, 1, 2), camera_num=0):
     '''
     :param camera_num:
@@ -115,13 +117,15 @@ def data_gathering(thresh_settings=(0, 128, 1, 2), camera_num=0):
         cv2.putText(frame, instruction_text, (10, 30), font, 1, (255, 255, 255), 0, cv2.LINE_AA)
         if time_till_next_press > 0:
             cv2.putText(frame, 'Saved!', (10, 300), font, 1, (0, 255, 0), 0, cv2.LINE_AA)
-        cv2.imshow('frame', frame)
-        # cv2.imshow('threshhold', thresh)
+        cv2.imshow('frame', frame)  # Take this and next line
+        cv2.imshow('threshhold', thresh)
+        sys.stdout.write("registered 1")
         key = cv2.waitKey(30)
-
+        sys.stdout.write("registered 2")
         if key == q:
             break
         elif contour is not None and time_till_next_press == 0:
+            print("valid")
             if key == r:
                 cropped_image = it.crop_to_contour(original, contour)
                 rock_images.append(cropped_image)
