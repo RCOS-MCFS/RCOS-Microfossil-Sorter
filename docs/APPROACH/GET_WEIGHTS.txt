@@ -1,0 +1,23 @@
+GET_WEIGHTS "2018-11-4-18" "V1.0"
+
+
+NAME
+get_weights
+
+
+SYNOPSIS
+
+get_weights(self)
+
+
+DESCRIPTION
+Function used to access the weights of the Approach class object
+
+
+
+.Return: object weights or if weights do no exist, return message.
+
+
+OPTIONS
+
+None

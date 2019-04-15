@@ -1,0 +1,18 @@
+TRAINING_AND_TESTING_SEP "2018-11-4-18" "V1.0" 
+
+NAME
+training_and_testing_sep
+
+
+SYNOPSIS
+
+training_and_testing_sep(data, training_fraction)
+
+DESCRIPTION
+Randomizes training data and returns a training and test set for training learning approach.Return: A training and testing set.
+
+
+OPTIONS
+
+ :param data: Numpy matrix of data
+ :param training_fraction: Float between 0.00 and 1.00 denoting the size of the training set

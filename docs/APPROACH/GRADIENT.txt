@@ -1,0 +1,25 @@
+GRADIENT "2018-11-4-18" "V1.0"
+
+
+NAME
+def gradient
+
+
+SYNOPSIS
+
+def gradient(Theta, X, Y, k, K)
+
+
+DESCRIPTION
+
+Inputs: Theta, X, Y coordinates arrays, k itterator, K a break point for a range.
+
+
+Use to calculate the gradient in the multiclass logistic regression equation.
+
+
+.Return: grad_val: value of the gradient 
+
+
+OPTIONS
+Theta, X, Y, k, K

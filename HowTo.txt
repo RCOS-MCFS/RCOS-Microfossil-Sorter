@@ -35,9 +35,12 @@ To run on terminal:
 \live_demo.py  [machine learning approach] [camera_number] [weight file]
 *note: weight file for pre trained machine learning
 
+
 *note: camera number default is commonly 0 and all directory path in the parameters need to be absolute.
 
 example: C:\Users\name\folder\path\image_folder\image
+
+Currently implemented approaches are sklearn and perceptron.
 
 
 To run in PyCharm IDE:
@@ -56,7 +59,4 @@ erosion level: Changes the pixel size of all images in the live feed congurently
 kernel size: Increase the pixel size of the live image.Lowering the size allows more pixel detail.
 
 When the machine learning detects a bone, the object will be outlined in a green contour along with a label saying bone.
-Else when it dectects a rock, it will be labeled as rock and be contoured by blue.
-
-
-
+Else when it dectects a rock, it will be labeled as rock and be contoured by red. Other objects will be contoured with blue.

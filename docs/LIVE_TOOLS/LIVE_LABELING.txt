@@ -1,0 +1,26 @@
+LIVE_LABELING "2018-11-4-18" "V1.0" "LIVE_LABELING man page"
+
+
+NAME
+live_labeling 
+
+
+SYNOPSIS
+
+live_labeling(string model,int camera_no=0, threshold_settings=(128, 1, 2))
+
+
+DESCRIPTION
+
+One of the key functions used in the demo, this acts as a live demonstration of the
+utility's capability for labeling, using the provided model to display classifications on
+objects passing in front of the camera.Return: None.
+
+
+OPTIONS
+
+:param model
+  The model, a subclass of the Approach class, being used for classification.
+:param camera_no
+  The number of the webcam to be used. Typically 0 on the raspberry pi, but often 1 if you're using a USB webcam on a computer with a webcam.
+ 

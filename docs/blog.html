@@ -21,8 +21,8 @@
 <div class="stretch">
     <div class="container">
 <div class="overview">
-    <h2>Overview</h2>
-    In paleontology, microfossil concentrate is a mixture of microfossils (typically from rodents and lizards) and gravel, with each particle being about 2 mm in size. Microfossils can potentially serve as a source of big data for paleontologists about the locations and environments from which they were collected. In order to study the microfossils, they must be sorted out from the gravel, which is a very time consuming process. This project aims to build a machine that automatically sorts microfossils from concentrate, and for that machine's assembly and software to be made open source and accessible by paleontology laboratories.
+    <font color="white"><h2>Overview</h2>
+    In paleontology, microfossil concentrate is a mixture of microfossils (typically from rodents and lizards) and gravel, with each particle being about 2 mm in size. Microfossils can potentially serve as a source of big data for paleontologists about the locations and environments from which they were collected. In order to study the microfossils, they must be sorted out from the gravel, which is a very time consuming process. This project aims to build a machine that automatically sorts microfossils from concentrate, and for that machine's assembly and software to be made open source and accessible by paleontology laboratories. </font>
 </div>
     </div>
 </div>
@@ -30,7 +30,128 @@
     
     
     
-<div class="blog-entry">
+
+
+<div class="container">
+    
+    
+    
+    
+    
+    
+    
+    <div class="blog-entry">
+<h2 class="blog-title"> Week 6? </h2>
+<h4 class="blog-date">November 4, 2018</h4>
+<p class="blog-body">
+    I made a hopper out of posterboard which has a nose for evenly distributing the concentrate.
+A diagram of what it is supposed to like is attached to this post (or will be, when I figure out how to do that).
+The dimensions are 0.5 x 0.5 cm square bottom opening, 5.5 x 5.5 cm square top opening, and the diagonal distance from center 
+    of top to center of bottom of a side of the hopper is 6 cm.
+Liz's cardboard conveyor belt is coming along very well, and Alexis has added some nice layman's documentation and is working 
+    on more in-depth documentation of how the program works for easier modification.
+    Also, I realized that a lab shaker/oscillator should be perfect for a vibratory bowl feeder. I'm convinced now that this is the
+    way to go. I believe that this is what Tom Kaye used in his paper.
+</p><p>
+    I decided to scrap a lot of the machine learning approaches I was doing before and start working through a tutorial on 
+    OCR/handwriting recognition. 
+    I think I need to understand more about something called HOGs, histogram of oriented gradients? 
+    Hopefully shouldn't be too bad.  
+ </p>
+ <p class="signature"> - Olivia</p>
+</div>
+<hr />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="blog-entry">
+<h2 class="blog-title"> Week 5 </h2>
+<h4 class="blog-date">October 26, 2018</h4>
+<p class="blog-body">
+    Regarding hardware, I started looking at vibratory bowl feeders again.  Although they are more complicated to print and assemble,
+    they might be more effective than just a hopper.
+    I found a couple of models online, however I can't find a license attached to them, so they can't be assumed open source.
+    I'll look into maybe making a similar (but much simpler) model myself.
+    I'm worried about sediment getting either damaged or stuck in the hopper.  However, I'm still not sure how to get it to vibrate.
+    For a hopper, it may just be simpler to make one out of posterboard before trying to print one.
+ </p>
+ <p class="signature"> - Olivia</p>
+</div>
+<hr />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="blog-entry">
+<h2 class="blog-title"> Week 4? 5? </h2>
+<h4 class="blog-date">October 21, 2018</h4>
+<p class="blog-body">
+    I've been looking into how to get the shape classifier working again.  This is possibly one of the most important parts of
+    the classifier because if it works okay, then it would be applicable to a much wider range of data sets.
+    There's Hu Moments, contours, edges, and image segmentation.  I need to figure out what I want to use and how to train a
+    model to recognize the difference between microfossils and gravel based on its contours.
+</p><p>
+    I'm not seeing a lot of information on training using contours, which I find a bit odd.  Maybe I'm approaching this incorrectly?
+    Once I figure out what method I can use, I can just add a class to approach.py to test how well contouring works individually.
+    If it ends up working well, I may move it to a separate file to see if I can use it in conjunction with color segmentation as well.
+    I've been reading <a href="https://mmeysenburg.github.io/image-processing/09-contours/">this</a>, <a href="https://www.pyimagesearch.com/2014/10/27/opencv-shape-descriptor-hu-moments-example/">this</a>, and <a href="http://www.robots.ox.ac.uk/~jmb/lectures/InformaticsLecture5.pdf">this</a>.
+    I may be able to re-appropriate parts of the data collection script for the shape discriminator.
+ </p>
+ <p class="signature"> - Olivia</p>
+</div>
+<hr />
+    
+    
+    
+    
+    
+    
+    <div class="blog-entry">
+<h2 class="blog-title"> F18 Semester start </h2>
+<h4 class="blog-date">October 16, 2018</h4>
+<p class="blog-body">
+    This semester (F18), three students are working on this project: myself, Alexis Joseph and Elizabeth Chavarin.
+</p><p>
+    So far, previous ideas have been:
+    Rotary sorter, which is being abandoned due to over-complication of project.
+    Some kind of copy of <a href="https://www.tomkaye.com/2-uncategorised/32-fully-automated-micro-fossil-picker">Kaye's sorter</a>, which is being abandoned due to difficulty of acquiring/making a vibratory bowl feeder
+    (not sure how to make it vibrate).
+ </p><p>
+    Now, current idea is to have a simple hopper deposit some small amount of concentrate onto a conveyor belt.  The concentrate
+    would be photographed and an air puff would remove the sample from the assembly line if microfossils are detected.  Everything
+    else is dumped into a waste bin.
+    The removed microfossils will likely have gravel still mixed in with it, so there should probably be a system for re-sorting
+    material multiple times in order to better isolate microfossils from gravel.
+    We will probably need to make use of 3D printed pieces, some PVC, plastic sheets, and some kind of motor.  We'll need to figure
+    out the gear ratios possibly, which will be annoying.
+    I found a model conveyor belt tutorial <a href="https://www.youtube.com/watch?v=EOPCZhKGPLA">here</a>.
+ </p>
+ <p class="signature"> - Olivia</p>
+</div>
+<hr />
+    
+    
+    
+    
+    <div class="blog-entry">
 <h2 class="blog-title"> Week 4 </h2>
 <h4 class="blog-date">May 2, 2018</h4>
 <p class="blog-body">
@@ -57,9 +178,10 @@
  <p class="signature"> - Olivia</p>
 </div>
 <hr />
-
-
-<div class="container">
+    
+    
+    
+    
 <div class="blog-entry">
     <h2 class="blog-title"> Week 9 </h2>
     <h4 class="blog-date">April 6, 2018</h4>
